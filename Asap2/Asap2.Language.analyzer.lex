@@ -12,7 +12,7 @@
 
 Identifier              [A-Za-z_][A-Za-z0-9_\.\[\]]*
 Space                   [ \t\u000c]
-Decimal                 [\-+]?[0-9]*\.?[0-9]+([eE][\-+]?[0-9]+)?
+Decimal                 [\-+]?[0-9]+(\.[0-9]*)?([eE][\-+]?[0-9]+)?
 HexNumber               0x[0-9A-Fa-f]+
 Eol                     (\r?\n)
 Alignment               ALIGNMENT_[A-Za-z0-9_]+
@@ -27,7 +27,7 @@ CommentEnd		\*\/
 LineComment		("//"[^\n]*)
 
 %x STATE_STRING
-%x STATE_IF_DATA
+//%x STATE_IF_DATA
 %x STATE_A2ML
 %x ML_COMMENT
 %x STATE_INCL
@@ -173,14 +173,28 @@ VARIANT_CODING                  { return Make(Token.VARIANT_CODING); }
 VAR_FORBIDDEN_COMB              { return Make(Token.VAR_FORBIDDEN_COMB); }
 VAR_SEPERATOR                   { return Make(Token.VAR_SEPERATOR); }
 VAR_NAMING                      { return Make(Token.VAR_NAMING); }
-IF_DATA                         { yy_push_state (STATE_IF_DATA); yylval.sb = new StringBuilder(); }
+IF_DATA                         { return Make(Token.IF_DATA); }
+SEGMENT                         { return Make(Token.SEGMENT); }
+CHECKSUM                        { return Make(Token.CHECKSUM); }
+PAGE                            { return Make(Token.PAGE); }
+CAL_PARAM_GROUP                 { return Make(Token.CAL_PARAM_GROUP); }
+PROTOCOL_LAYER                  { return Make(Token.PROTOCOL_LAYER); }
+DAQ_LIST                        { return Make(Token.DAQ_LIST); }
+DAQ                             { return Make(Token.DAQ); }
+TIMESTAMP_SUPPORTED             { return Make(Token.TIMESTAMP_SUPPORTED); }
+EVENT                           { return Make(Token.EVENT); }
+PAG                             { return Make(Token.PAG); }
+PGM                             { return Make(Token.PGM); }
+SECTOR                          { return Make(Token.SECTOR); }
+XCP_ON_CAN                      { return Make(Token.XCP_ON_CAN); }
+DAQ_EVENT                       { return Make(Token.DAQ_EVENT); }
 A2ML                            { yy_push_state (STATE_A2ML); yylval.sb = new StringBuilder(); }
-
 "\/include"                     { yy_push_state(STATE_INCL); }
 \"                              { yy_push_state(STATE_STRING); yylval.sb = new StringBuilder(); }
 {Identifier}                    { return Make(Token.IDENTIFIER); }
 {HexNumber}                     { return MakeHexNumber(); }
 {Decimal}                       { return MakeNumber(); }
+
 
 <STATE_INCL>{
     {Eol}           { yy_pop_state(); TryInclude(null); }
@@ -188,13 +202,14 @@ A2ML                            { yy_push_state (STATE_A2ML); yylval.sb = new St
     [^ \t]{IncFile} { yy_pop_state(); TryInclude(yytext); }
 }
 
-<STATE_IF_DATA> {
-    "\/end IF_DATA" { yy_pop_state(); return MakeStringBuilder(Token.IF_DATA); }
-    \\.             { yylval.sb.Append(yytext); }
-    \r?\n           { yylval.sb.Append("\r\n"); }
-    .               { yylval.sb.Append(yytext); }
-    <<EOF>>         { ; /* raise an error. */ }
-}
+
+//<STATE_IF_DATA> {
+//    "\/end IF_DATA" { yy_pop_state(); return MakeStringBuilder(Token.IF_DATA); }
+//    \\.             { yylval.sb.Append(yytext); }
+//    \r?\n           { yylval.sb.Append("\r\n"); }
+//    .               { yylval.sb.Append(yytext); }
+//    <<EOF>>         { ; /* raise an error. */ }
+//}
 
 <STATE_A2ML> {
     "\/end A2ML"    { yy_pop_state(); return MakeStringBuilder(Token.A2ML); }

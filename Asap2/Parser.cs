@@ -405,7 +405,7 @@ namespace Asap2
                     }
                     else if (nodeElemAtt.CodeAsHex)
                     {
-                        UInt64 tmp = (UInt64)tree;
+                        UInt64 tmp = Convert.ToUInt64(tree);
                         String value = "0x" + tmp.ToString("X");
                         data += value;
                         yield return data;

@@ -2,3 +2,5 @@ Parser placeholder
 ------------------
 
 This is only a placeholder file for grouping the component files (LEX, YACC) that compose the parser.
+Severity	Code	Description	Project	File	Line	Suppression State
+C:\Users\User\.nuget\packages\yacclextools.gplex\1.2.2.4\tools\net20/Gplex.exe"  /out:"./Asap2.Scanner.Generated.cs"

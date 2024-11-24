@@ -18,9 +18,23 @@
             public PROJECT project;
             public HEADER header;
             public MEASUREMENT measurement;
+            public IF_DATA if_data;
+            public SEGMENT segment;
+            public CHECKSUM checksum;
+            public TIMESTAMP_SUPPORTED timestamp_supported;
+            public SECTOR sector;
+            public XCP_ON_CAN xcp_on_can;
+            public PGM pgm;
+            public PAG pag;
+            public EVENT event1;
+            public DAQ_EVENT daq_event;
+            public DAQ_LIST daq_list;
+            public DAQ daq;
+            public CAL_PARAM_GROUP cal_param_group;
+            public PROTOCOL_LAYER protocol_layer;
+            public PAGE page;
             public ECU_ADDRESS ecu_address;
             public ECU_ADDRESS_EXTENSION ecu_address_ext;
-            public IF_DATA if_data;
             public A2ML a2ml;
             public ANNOTATION annotation;
             public ANNOTATION_TEXT annotation_text;
@@ -69,7 +83,6 @@
 
 %token <d> NUMBER
 %token <s> QUOTED_STRING
-%token <s> IF_DATA
 %token <s> IDENTIFIER
 
 %token <s> A2ML
@@ -171,6 +184,21 @@
 %token STEP_SIZE
 %token MAP_LIST
 %token MEASUREMENT
+%token IF_DATA
+%token SEGMENT
+%token CHECKSUM
+%token XCP_ON_CAN
+%token SECTOR
+%token PGM
+%token PAG
+%token EVENT
+%token DAQ_EVENT
+%token DAQ_LIST
+%token DAQ
+%token TIMESTAMP_SUPPORTED
+%token CAL_PARAM_GROUP
+%token PROTOCOL_LAYER
+%token PAGE
 %token MONOTONY
 %token CHARACTERISTIC
 %token ECU_ADDRESS
@@ -267,9 +295,37 @@
 %type <header>              header_data
 %type <measurement>         measurement
 %type <measurement>         measurement_data
+%type <if_data>             if_data
+%type <if_data>             if_data_data
+%type <segment>             segment
+%type <segment>             segment_data
+%type <checksum>            checksum
+%type <checksum>            checksum_data
+%type <timestamp_supported> timestamp_supported
+%type <timestamp_supported> timestamp_supported_data
+%type <xcp_on_can>          xcp_on_can
+%type <xcp_on_can>          xcp_on_can_data
+%type <sector>              sector
+%type <sector>              sector_data
+%type <pgm>                 pgm
+%type <pgm>                 pgm_data
+%type <pag>                 pag
+%type <pag>                 pag_data
+%type <event1>              event
+%type <event1>              event_data
+%type <daq_event>           daq_event
+%type <daq_event>           daq_event_data
+%type <daq>                 daq
+%type <daq>                 daq_data
+%type <daq_list>            daq_list
+%type <daq_list>            daq_list_data
+%type <cal_param_group>     cal_param_group
+%type <protocol_layer>      protocol_layer
+%type <protocol_layer>      protocol_layer_data
+%type <page>                page
+%type <page>                page_data
 %type <max_refresh>         max_refresh
 %type <symbol_link>         symbol_link
-%type <if_data>             if_data
 %type <var_address>         var_address
 %type <var_characteristic> var_characteristic
 %type <var_criterion>       var_criterion
@@ -1061,11 +1117,6 @@ module_data :   IDENTIFIER QUOTED_STRING {
                 }
                 ;
 
-if_data         : BEGIN IF_DATA {
-                    $$ = new IF_DATA(@$, $2);
-                }
-                ;
-
 mod_common      : BEGIN MOD_COMMON mod_common_data END MOD_COMMON {
                     $$ = $3;
                 }
@@ -1191,15 +1242,252 @@ mod_par_data :  QUOTED_STRING {
                 }
                 ;
 
-matrix_dim      : MATRIX_DIM NUMBER NUMBER NUMBER {
-                    $$ = new MATRIX_DIM(@$, (uint)$2, (uint)$3, (uint)$4);
+matrix_dim
+    : MATRIX_DIM NUMBER {
+        $$ = new MATRIX_DIM(@$, (uint)$2);
+    }
+    | MATRIX_DIM NUMBER NUMBER {
+        $$ = new MATRIX_DIM(@$, (uint)$2, (uint)$3);
+    }
+    | MATRIX_DIM NUMBER NUMBER NUMBER {
+        $$ = new MATRIX_DIM(@$, (uint)$2, (uint)$3, (uint)$4);
+    }
+    ;
+
+
+if_data         : BEGIN IF_DATA if_data_data END IF_DATA {
+                    $$ = $3;
                 }
                 ;
+if_data_data    : IDENTIFIER {
+                    $$ = new IF_DATA(@$, $1);
+                }
+                | IDENTIFIER NUMBER IDENTIFIER QUOTED_STRING NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER IDENTIFIER NUMBER NUMBER NUMBER {
+                    $$ = new IF_DATA(@$, $1);
+                }
+                | IDENTIFIER NUMBER IDENTIFIER NUMBER NUMBER NUMBER{
+                    $$ = new IF_DATA(@$, $1);
+                }
+
+                | if_data_data segment {
+                    $$ = $1;
+                    $$.segment = $2;
+                }
+                | if_data_data cal_param_group {
+                    $$ = $1;
+                    $$.cal_param_group.Add($2);
+                }
+                | if_data_data protocol_layer {
+                    $$ = $1;
+                    $$.protocol_layer = $2;
+                }
+                | if_data_data daq {
+                    $$ = $1;
+                    $$.daq = $2;
+                }
+                | if_data_data pag {
+                    $$ = $1;
+                    $$.pag = $2;
+                }
+                | if_data_data pgm {
+                    $$ = $1;
+                    $$.pgm = $2;
+                }
+                | if_data_data xcp_on_can {
+                    $$ = $1;
+                    $$.xcp_on_can = $2;
+                }
+                | if_data_data daq_event {
+                    $$ = $1;
+                    $$.daq_event = $2;
+                }
+                ;
+
+
+
+pgm        : BEGIN PGM pgm_data END PGM {
+                    $$ = $3;
+                }
+                ;
+
+pgm_data    : IDENTIFIER NUMBER NUMBER {
+                    // TODO: Implement PGM
+                    $$ = new PGM(@$);
+                }
+                | pgm_data sector {
+                    $$ = $1;
+                    $$.sector.Add($2);
+                }
+
+                ;
+
+
+xcp_on_can        : BEGIN XCP_ON_CAN xcp_on_can_data END XCP_ON_CAN {
+                    $$ = $3;
+                }
+                ;
+
+xcp_on_can_data    : NUMBER IDENTIFIER NUMBER IDENTIFIER NUMBER IDENTIFIER NUMBER IDENTIFIER NUMBER IDENTIFIER IDENTIFIER IDENTIFIER NUMBER IDENTIFIER NUMBER  IDENTIFIER IDENTIFIER{
+                    // TODO: Implement
+                    $$ = new XCP_ON_CAN(@$);
+                }
+                ;
+
+sector        : BEGIN SECTOR sector_data END SECTOR {
+                    $$ = $3;
+                }
+                ;
+
+sector_data    : QUOTED_STRING NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER{
+                    // TODO: Implement SECTOR
+                    $$ = new SECTOR(@$);
+                }
+                ;
+
+
+
+
+pag        : BEGIN PAG pag_data END PAG {
+                    $$ = $3;
+                }
+                ;
+
+pag_data    : NUMBER{
+                    // TODO: Implement PAG
+                    //$$ = new PAG(@$)
+                }
+                ;
+
+daq_event        : BEGIN DAQ_EVENT daq_event_data END DAQ_EVENT {
+                    $$ = $3;
+                }
+                ;
+
+daq_event_data    : IDENTIFIER QUOTED_STRING NUMBER{
+                    // TODO: Implement
+                    $$ = new DAQ_EVENT(@$, $3);
+                }
+                ;
+
+
+daq             : BEGIN DAQ daq_data END DAQ {
+                    $$ = $3;
+                }
+                ;
+
+daq_data   : IDENTIFIER NUMBER NUMBER NUMBER IDENTIFIER IDENTIFIER IDENTIFIER IDENTIFIER NUMBER IDENTIFIER IDENTIFIER{
+                    //TODO: Implement constructor
+                    $$ = new DAQ(@$);
+                }
+                | daq_data timestamp_supported {
+                    $$ = $1;
+                    $$.timestamp_supported = $2;
+                }
+                | daq_data daq_list {
+                    $$ = $1;
+                    $$.daq_list = $2;
+                }
+                | daq_data event {
+                    $$ = $1;
+                    $$.events.Add($2);
+                }
+                ;
+
+daq_list : BEGIN DAQ_LIST daq_list_data END DAQ_LIST {
+                    $$ = $3;
+                }
+                ;
+
+daq_list_data : NUMBER IDENTIFIER IDENTIFIER IDENTIFIER NUMBER IDENTIFIER NUMBER IDENTIFIER NUMBER{
+                    //TODO: Implement constructor
+                    $$ = new DAQ_LIST(@$, $1, $3, $5, $7, $9);
+                }
+                ;
+
+event        : BEGIN EVENT event_data END EVENT {
+                    $$ = $3;
+                }
+                ;
+
+event_data   : QUOTED_STRING QUOTED_STRING NUMBER QUOTED_STRING NUMBER NUMBER NUMBER NUMBER{
+                    $$ = new EVENT(@$, $1, $2, $3, $4, $5, $6, $7, $8);
+                };
+
+
+timestamp_supported : BEGIN TIMESTAMP_SUPPORTED timestamp_supported_data END TIMESTAMP_SUPPORTED {
+                    $$ = $3;
+                }
+                ;
+
+timestamp_supported_data : NUMBER IDENTIFIER IDENTIFIER{
+                    //TODO: Implement constructor
+                    $$ = new TIMESTAMP_SUPPORTED(@$);
+                }
+                ;
+
+
+segment         : BEGIN SEGMENT segment_data END SEGMENT {
+                    $$ = $3;
+                }
+                ;
+segment_data    : NUMBER NUMBER NUMBER NUMBER NUMBER {
+                    $$ = new SEGMENT(@$, $1, $2, $3, $4, $5);
+                }
+                | segment_data checksum {
+                    $$ = $1;
+                    $$.checksum = $2;
+                }
+                | segment_data page {
+                    $$ = $1;
+                    $$.page = $2;
+                }
+                ;
+
+checksum        : BEGIN CHECKSUM checksum_data END CHECKSUM {
+                    $$ = $3;
+                }
+                ;
+
+checksum_data   : IDENTIFIER IDENTIFIER NUMBER IDENTIFIER QUOTED_STRING{
+                    $$ = new CHECKSUM(@$, $1, $3, $5);
+                };
+
+page        : BEGIN PAGE page_data END PAGE {
+                    $$ = $3;
+                }
+                ;
+page_data   : NUMBER IDENTIFIER IDENTIFIER IDENTIFIER {
+                    //$$ = $1;
+                    //$$ = new PAGE(@$, $1, $1, $1, $1, $1)
+                }
+                ;
+
+cal_param_group : BEGIN CAL_PARAM_GROUP cal_param_group_data END CAL_PARAM_GROUP {
+                    //$$ = $3;
+                }
+                ;
+
+cal_param_group_data   : IDENTIFIER QUOTED_STRING IDENTIFIER NUMBER IDENTIFIER NUMBER IDENTIFIER QUOTED_STRING NUMBER NUMBER NUMBER NUMBER{
+                    //$$ = new CAL_PARAM_GROUP(@$);
+                };
+
+protocol_layer : BEGIN PROTOCOL_LAYER protocol_layer_data END PROTOCOL_LAYER {
+                    $$ = $3;
+                }
+                ;
+
+protocol_layer_data   : NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER IDENTIFIER_list{
+                    //TODO: Implement constructor
+                    //$$ = new CAL_PARAM_GROUP(@$);
+                };
+
+
 
 measurement     : BEGIN MEASUREMENT measurement_data END MEASUREMENT {
                     $$ = $3;
                 }
                 ;
+
 
 measurement_data :  IDENTIFIER QUOTED_STRING IDENTIFIER IDENTIFIER NUMBER NUMBER NUMBER NUMBER {
                     $$ = new MEASUREMENT(@$, $1, $2, (DataType)EnumToStringOrAbort(typeof(DataType), $3), $4, (uint)$5, $6, $7, $8);
@@ -1431,6 +1719,7 @@ byte_order      : BYTE_ORDER IDENTIFIER {
                 }
                 ;
 
+
 ecu_address                 : ECU_ADDRESS NUMBER {
                                 $$ = new ECU_ADDRESS(@$, (UInt64)$2);
                             }
@@ -1506,6 +1795,8 @@ ref_measurement_data        : /* start */  {
                                 $$.reference.Add($2);
                             }
                             ;
+
+
 record_layout
     : BEGIN RECORD_LAYOUT record_layout_data END RECORD_LAYOUT {
          $$ = $3;

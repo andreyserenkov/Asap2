@@ -207,6 +207,7 @@ namespace Asap2
             ALIGNMENT_WORD,
             ALIGNMENT_LONG,
             ALIGNMENT_INT64,
+            ALIGNMENT_FLOAT16_IEEE,
             ALIGNMENT_FLOAT32_IEEE,
             ALIGNMENT_FLOAT64_IEEE
         }
@@ -861,20 +862,7 @@ namespace Asap2
         public STATIC_RECORD_LAYOUT static_record_layout;
     }
 
-    [Base()]
-    public class IF_DATA : Asap2Base
-    {
-        public IF_DATA(Location location, string data) : base(location)
-        {
-            this.data = data;
-            char[] delimiterChars = { ' ', '\t' };
-            string[] words = data.Split(delimiterChars);
-            this.name = words[0];
-        }
-        public string name { get; private set; }
-        [Element(0, IsArgument = true)]
-        public string data;
-    }
+    
 
     [Base()]
     public class A2ML : Asap2Base
@@ -963,6 +951,18 @@ namespace Asap2
 
         [Element(0, IsArgument = true, CodeAsHex = true)]
         public UInt64 value;
+    }
+
+    [Base(IsSimple = true)]
+    public class DAQ_LIST_TYPE : Asap2Base
+    {
+        public DAQ_LIST_TYPE(Location location, string value) : base(location)
+        {
+            this.value = value;
+        }
+
+        [Element(0, IsArgument = true)]
+        public string value;
     }
 
     [Base(IsSimple = true)]
@@ -1338,19 +1338,36 @@ namespace Asap2
     [Base(IsSimple = true)]
     public class MATRIX_DIM : Asap2Base
     {
-        public MATRIX_DIM(Location location, uint xDim, uint yDim, uint zDim) : base(location)
+        // Constructor for one dimension
+        public MATRIX_DIM(Location location, uint dimX) : base(location)
         {
-            this.xDim = xDim;
-            this.yDim = yDim;
-            this.zDim = zDim;
+            xDim = dimX;
+            yDim = null;
+            zDim = null;
+        }
+
+        // Constructor for two dimensions
+        public MATRIX_DIM(Location location, uint dimX, uint dimY) : base(location)
+        {
+            xDim = dimX;
+            yDim = dimY;
+            zDim = null;
+        }
+
+        // Constructor for three dimensions
+        public MATRIX_DIM(Location location, uint dimX, uint dimY, uint dimZ) : base(location)
+        {
+            xDim = dimX;
+            yDim = dimY;
+            zDim = dimZ;
         }
 
         [Element(0, IsArgument = true)]
-        public uint xDim;
+        public uint? xDim;
         [Element(1, IsArgument = true)]
-        public uint yDim;
+        public uint? yDim;
         [Element(2, IsArgument = true)]
-        public uint zDim;
+        public uint? zDim;
     }
 
     [Base()]
@@ -1726,5 +1743,28 @@ namespace Asap2
         public string Formula;
         [Element(1, IsArgument = true, IsList = true)]
         public List<string> Characteristic = new List<string>();
+    }
+
+    [Base(IsSimple = true)]
+    public class EXTERNAL_FUNCTION : Asap2Base
+    {
+        public EXTERNAL_FUNCTION(Location location, string value) : base(location)
+        {
+            this.value = value;
+        }
+
+        public string value;
+    }
+
+    [Base(IsSimple = true)]
+    public class MAX_BLOCK_SIZE : Asap2Base
+    {
+        public MAX_BLOCK_SIZE(Location location, UInt64 value) : base(location)
+        {
+            this.value = value;
+        }
+
+        [Element(0, IsArgument = true, CodeAsHex = true)]
+        public UInt64 value;
     }
 }

@@ -1,69 +1,42 @@
-﻿using System;
+﻿#define TRACE_ACTIONS
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using Asap2;
+using System.Text.RegularExpressions;
 
 namespace Asap2Test
 {
     class Program
     {
+
         static void Main(string[] args)
         {
             var errorHandler = new ErrorHandler();
-            var parser = new Asap2.Parser("../../../testFile.a2l", errorHandler);
+            var parser = new Asap2.Parser("../../../FCR-21_Dev.A2L", errorHandler);
             Asap2.FileComment comment = new Asap2.FileComment(Environment.NewLine + "A2l file for testing ASAP2 parser." + Environment.NewLine, true);
             Asap2.Asap2File tree = parser.DoParse();
             if (tree != null)
             {
-                try
-                {
-                    if (errorHandler.warnings == 0)
-                    {
-                        Console.WriteLine("Parsed file with no warnings.");
-                    }
-                    else
-                    {
-                        Console.WriteLine(string.Format("Parsed file with {0} warnings.", errorHandler.warnings));
-                    }
+                var project = tree.elements.Last() as PROJECT;
+                var module = project.modules.FirstOrDefault();
+                var measurements = module.Value.AxisPtsCharacteristicMeasurement.Where(c => c.Value is MEASUREMENT).ToList();
 
-                    errorHandler = new ErrorHandler();
-                    tree.Validate(errorHandler);
-                    
-                    if (errorHandler.warnings == 0)
-                    {
-                        Console.WriteLine("Validated parsed data with no warnings.");
-                    }
-                    else
-                    {
-                        Console.WriteLine(string.Format("Validated parsed data with {0} warnings.", errorHandler.warnings));
-                    }
 
-                    Console.WriteLine("Press enter to serialise data.");
-                    Console.ReadLine();
+                var compuMethods = module.Value.CompuMethods.ToList();
 
-                    tree.elements.Insert(0, comment);
-                    var ms = new MemoryStream();
-                    StreamWriter stream = new StreamWriter(ms, new UTF8Encoding(true));
-                    parser.Serialise(tree, stream);
-                    ms.Position = 0;
-                    var sr = new StreamReader(ms);
-                    var myStr = sr.ReadToEnd();
-                    Console.WriteLine(myStr);
-                }
-                catch (Asap2.ValidationErrorException e)
-                {
-                    Console.WriteLine("Validation of parsed data failed!");
-                    Console.WriteLine(e.ToString());
-                }
+                var airTemp = measurements[2].Value as MEASUREMENT;
+                var airTempCompuMethod = compuMethods.Where(cm => cm.Key.Equals(airTemp.Conversion)).FirstOrDefault().Value;
+
+                var if_data = airTemp.if_data.First();
+
+                var events = if_data.daq_event;
+                Console.WriteLine(events.eventid);
+
             }
-            else
-            {
-                Console.WriteLine("Parsing failed!");
-            }
-            Console.WriteLine("Press enter to close...");
-            Console.ReadLine();
         }
     }
 }
