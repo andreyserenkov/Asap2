@@ -188,12 +188,18 @@ PGM                             { return Make(Token.PGM); }
 SECTOR                          { return Make(Token.SECTOR); }
 XCP_ON_CAN                      { return Make(Token.XCP_ON_CAN); }
 DAQ_EVENT                       { return Make(Token.DAQ_EVENT); }
+TP_BLOB                         { return Make(Token.TP_BLOB); }
+QP_BLOB                         { return Make(Token.QP_BLOB); }
+SOURCE                          { return Make(Token.SOURCE); }
+RASTER                          { return Make(Token.RASTER); }
+SEED_KEY                        { return Make(Token.SEED_KEY); }
 A2ML                            { yy_push_state (STATE_A2ML); yylval.sb = new StringBuilder(); }
 "\/include"                     { yy_push_state(STATE_INCL); }
 \"                              { yy_push_state(STATE_STRING); yylval.sb = new StringBuilder(); }
 {Identifier}                    { return Make(Token.IDENTIFIER); }
 {HexNumber}                     { return MakeHexNumber(); }
 {Decimal}                       { return MakeNumber(); }
+
 
 
 <STATE_INCL>{

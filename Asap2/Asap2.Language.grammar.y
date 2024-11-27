@@ -77,6 +77,11 @@
             public VAR_CRITERION var_criterion;
             public VAR_CHARACTERISTIC var_characteristic;
             public VAR_ADDRESS var_address;
+            public TP_BLOB tp_blob;
+            public SOURCE source;
+            public QP_BLOB qp_blob;
+            public RASTER raster;
+            public SEED_KEY seed_key;
 }
 
 %start Asap2File
@@ -235,7 +240,14 @@
 %token VAR_NAMING
 %token BEGIN
 %token END
+%token TP_BLOB
+%token SOURCE
+%token QP_BLOB
+%token RASTER
+%token SEED_KEY
+
 %token maxParseToken COMMENT
+
 
 %type <deposit>             deposit
 %type <byte_order>          byte_order
@@ -351,6 +363,16 @@
 %type <s>                   default_value
 %type <d>                   default_value_numeric
 %type <IDENTIFIER_list>     IDENTIFIER_list
+%type <tp_blob>             tp_blob
+%type <tp_blob>             tp_blob_data
+%type <qp_blob>             qp_blob
+%type <qp_blob>             qp_blob_data
+%type <source>              source
+%type <source>              source_data
+%type <raster>              raster
+%type <raster>              raster_data
+%type <seed_key>            seed_key
+%type <seed_key>            seed_key_data
 
 %%
 
@@ -1262,12 +1284,22 @@ if_data         : BEGIN IF_DATA if_data_data END IF_DATA {
 if_data_data    : IDENTIFIER {
                     $$ = new IF_DATA(@$, $1);
                 }
+                | IDENTIFIER TP_BLOB
+                {
+                    $$ = new IF_DATA(@$, $1);
+                }
+                | IDENTIFIER IDENTIFIER NUMBER NUMBER NUMBER{
+                //TODO: Fill contructor correctly
+                    $$ = new IF_DATA(@$, $1);
+                }
                 | IDENTIFIER NUMBER IDENTIFIER QUOTED_STRING NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER IDENTIFIER NUMBER NUMBER NUMBER {
+                     //TODO: Fill contructor correctly
                     $$ = new IF_DATA(@$, $1);
                 }
                 | IDENTIFIER NUMBER IDENTIFIER NUMBER NUMBER NUMBER{
+                    //TODO: Fill contructor correctly
                     $$ = new IF_DATA(@$, $1);
-                }
+               }
 
                 | if_data_data segment {
                     $$ = $1;
@@ -1300,6 +1332,22 @@ if_data_data    : IDENTIFIER {
                 | if_data_data daq_event {
                     $$ = $1;
                     $$.daq_event = $2;
+                }
+                | if_data_data tp_blob {
+                    $$ = $1;
+                    $$.tp_blob = $2;
+                }
+                | if_data_data source {
+                    $$ = $1;
+                    $$.source.Add($2);
+                }
+                | if_data_data raster {
+                    $$ = $1;
+                    $$.raster.Add($2);
+                }
+                | if_data_data seed_key {
+                    $$ = $1;
+                    $$.seed_key = $2;
                 }
                 ;
 
@@ -2117,6 +2165,75 @@ var_address
         $$.Addresses.Add((UInt64)$2);
     }
     ;
+
+tp_blob
+    : BEGIN TP_BLOB tp_blob_data END TP_BLOB {
+        $$ = $3;
+    }
+    ;
+
+tp_blob_data
+    : NUMBER NUMBER {
+        $$ = new TP_BLOB(@$, (UInt64)$1, (UInt64)$2);
+    }
+    | NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER {
+        $$ = new TP_BLOB(@$, (UInt64)$1, (UInt64)$2, (UInt64)$3, (UInt64)$4, (UInt64)$5, (UInt64)$6);
+    }
+    ;
+
+source
+    : BEGIN SOURCE source_data END SOURCE {
+        $$ = $3;
+    }
+    ;
+
+source_data
+    : QUOTED_STRING NUMBER NUMBER {
+        $$ = new SOURCE(@$, $1, $2, $3);
+    }
+    |  source_data qp_blob {
+        $$ = $1;
+        $$.qp_blob = $2;
+    }
+    ;
+
+qp_blob
+    : BEGIN QP_BLOB qp_blob_data END QP_BLOB {
+        $$ = $3;
+    }
+    ;
+
+qp_blob_data
+    : NUMBER IDENTIFIER NUMBER IDENTIFIER NUMBER IDENTIFIER NUMBER IDENTIFIER NUMBER {
+        $$ = new QP_BLOB(@$, $1, $2, (UInt64)$3, $4, (UInt64)$5, $6, (UInt64)$7, $8, (UInt64)$9);
+    }
+    ;
+
+raster
+    : BEGIN RASTER raster_data END RASTER {
+        $$ = $3;
+    }
+    ;
+
+raster_data
+    : QUOTED_STRING QUOTED_STRING NUMBER NUMBER NUMBER {
+        $$ = new RASTER(@$, $1, $2, $3, $4, $5);
+    }
+    ;
+
+seed_key
+    : BEGIN SEED_KEY seed_key_data END SEED_KEY {
+        $$ = $3;
+    }
+    ;
+
+seed_key_data
+    : QUOTED_STRING QUOTED_STRING QUOTED_STRING {
+        $$ = new SEED_KEY(@$, $1, $2, $3);
+    }
+    ;
+
+
 
 %%
 

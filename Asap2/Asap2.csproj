@@ -79,7 +79,11 @@
     <Compile Include="Asap2Tree\PAG.cs" />
     <Compile Include="Asap2Tree\DAQ_LIST.cs" />
     <Compile Include="Asap2Tree\EVENT.cs" />
+    <Compile Include="Asap2Tree\RASTER.cs" />
     <Compile Include="Asap2Tree\SECTOR.cs" />
+    <Compile Include="Asap2Tree\QP_BLOB.cs" />
+    <Compile Include="Asap2Tree\SEED_KEY.cs" />
+    <Compile Include="Asap2Tree\SOURCE.cs" />
     <Compile Include="Asap2Tree\TIMESTAMP_SUPPORTED.cs" />
     <Compile Include="Asap2Tree\DAQ.cs" />
     <Compile Include="Asap2Tree\FileComment.cs" />
@@ -88,6 +92,7 @@
     <Compile Include="Asap2Tree\PAGE.cs" />
     <Compile Include="Asap2Tree\PROTOCOL_LAYER.cs" />
     <Compile Include="Asap2Tree\SEGMENT.cs" />
+    <Compile Include="Asap2Tree\TP_BLOB.cs" />
     <Compile Include="Asap2Tree\XCP_ON_CAN.cs" />
     <Compile Include="Attributes.cs" />
     <Compile Include="Asap2Tree\DEF_CHARACTERISTIC.cs" />

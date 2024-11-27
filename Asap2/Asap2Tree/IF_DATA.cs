@@ -13,6 +13,7 @@ namespace Asap2
         {
             this.name = name;
         }
+
         public string name { get; private set; }
 
         [Element(1)]
@@ -34,5 +35,18 @@ namespace Asap2
 
         [Element(7, IsArgument = false, Name = "DAQ_EVENT", Comment = "XCP_ON_CAN for IF_DATA")]
         public DAQ_EVENT daq_event { get; set; }
+
+        [Element(8, IsArgument = false, Name = "TP_BLOB", Comment = "TP_BLOB for IF_DATA")]
+        public TP_BLOB tp_blob { get; set; }
+
+        [Element(9, IsArgument = false, Name = "SOURCE", Comment = "SOURCE for IF_DATA")]
+        public List<SOURCE> source = new List<SOURCE>();
+        [Element(10, IsArgument = false, Name = "RASTER", Comment = "RASTER for IF_DATA")]
+        public List<RASTER> raster = new List<RASTER>();
+
+        [Element(11, IsArgument = false, Name = "RASTER", Comment = "RASTER for IF_DATA")]
+        public SEED_KEY seed_key { get; set; }
+
+
     }
 }
