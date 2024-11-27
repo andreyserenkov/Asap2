@@ -2616,7 +2616,7 @@ ASAP2_VERSION 1 71
         /end TIMESTAMP_SUPPORTED
         /begin DAQ_LIST
           0x00
-          DAQ_LIST_TYPE LIST_TYPE
+          DAQ_LIST_TYPE DAQ
           MAX_ODT 0xFF
           MAX_ODT_ENTRIES 0xFF
           FIRST_PID 0x00
@@ -2625,7 +2625,7 @@ ASAP2_VERSION 1 71
           "20ms"
           "20ms"
           0x00
-          "DAQ"
+          DAQ
           0xFF
           0x14
           0x06
@@ -3021,7 +3021,7 @@ ASAP2_VERSION 1 71
       SYMBOL_LINK "AirTemp" 0
       /begin IF_DATA XCP
         /begin DAQ_EVENT FIXED_EVENT_LIST
-          "EVENT" 0x00
+          EVENT 0x00
         /end DAQ_EVENT
       /end IF_DATA
       /begin IF_DATA CANAPE_EXT
@@ -3084,7 +3084,7 @@ ASAP2_VERSION 1 71
       SYMBOL_LINK "AnaIn1" 0
       /begin IF_DATA XCP
         /begin DAQ_EVENT FIXED_EVENT_LIST
-          "EVENT" 0x00
+          EVENT 0x00
         /end DAQ_EVENT
       /end IF_DATA
       /begin IF_DATA CANAPE_EXT
@@ -3102,7 +3102,7 @@ ASAP2_VERSION 1 71
       SYMBOL_LINK "AnaIn2" 0
       /begin IF_DATA XCP
         /begin DAQ_EVENT FIXED_EVENT_LIST
-          "EVENT" 0x00
+          EVENT 0x00
         /end DAQ_EVENT
       /end IF_DATA
       /begin IF_DATA CANAPE_EXT
@@ -3179,7 +3179,7 @@ ASAP2_VERSION 1 71
       SYMBOL_LINK "Barometer" 0
       /begin IF_DATA XCP
         /begin DAQ_EVENT FIXED_EVENT_LIST
-          "EVENT" 0x00
+          EVENT 0x00
         /end DAQ_EVENT
       /end IF_DATA
       /begin IF_DATA CANAPE_EXT
@@ -3280,7 +3280,7 @@ ASAP2_VERSION 1 71
       SYMBOL_LINK "EGT2" 0
       /begin IF_DATA XCP
         /begin DAQ_EVENT FIXED_EVENT_LIST
-          "EVENT" 0x00
+          EVENT 0x00
         /end DAQ_EVENT
       /end IF_DATA
       /begin IF_DATA CANAPE_EXT
@@ -3299,7 +3299,7 @@ ASAP2_VERSION 1 71
       SYMBOL_LINK "CHT1" 0
       /begin IF_DATA XCP
         /begin DAQ_EVENT FIXED_EVENT_LIST
-          "EVENT" 0x00
+          EVENT 0x00
         /end DAQ_EVENT
       /end IF_DATA
       /begin IF_DATA CANAPE_EXT
@@ -3345,7 +3345,7 @@ ASAP2_VERSION 1 71
       SYMBOL_LINK "CHT2" 0
       /begin IF_DATA XCP
         /begin DAQ_EVENT FIXED_EVENT_LIST
-          "EVENT" 0x00
+          EVENT 0x00
         /end DAQ_EVENT
       /end IF_DATA
       /begin IF_DATA CANAPE_EXT
@@ -3768,7 +3768,7 @@ ASAP2_VERSION 1 71
       SYMBOL_LINK "EGT1" 0
       /begin IF_DATA XCP
         /begin DAQ_EVENT FIXED_EVENT_LIST
-          "EVENT" 0x00
+          EVENT 0x00
         /end DAQ_EVENT
       /end IF_DATA
       /begin IF_DATA CANAPE_EXT
@@ -3867,7 +3867,7 @@ ASAP2_VERSION 1 71
       SYMBOL_LINK "EgtFeedback" 0
       /begin IF_DATA XCP
         /begin DAQ_EVENT FIXED_EVENT_LIST
-          "EVENT" 0x00
+          EVENT 0x00
         /end DAQ_EVENT
       /end IF_DATA
       /begin IF_DATA CANAPE_EXT
@@ -3885,7 +3885,7 @@ ASAP2_VERSION 1 71
       SYMBOL_LINK "EgtFuelCorrection" 0
       /begin IF_DATA XCP
         /begin DAQ_EVENT FIXED_EVENT_LIST
-          "EVENT" 0x00
+          EVENT 0x00
         /end DAQ_EVENT
       /end IF_DATA
       /begin IF_DATA CANAPE_EXT
@@ -3903,7 +3903,7 @@ ASAP2_VERSION 1 71
       SYMBOL_LINK "EgtInteg" 0
       /begin IF_DATA XCP
         /begin DAQ_EVENT FIXED_EVENT_LIST
-          "EVENT" 0x00
+          EVENT 0x00
         /end DAQ_EVENT
       /end IF_DATA
       /begin IF_DATA CANAPE_EXT
@@ -3999,7 +3999,7 @@ ASAP2_VERSION 1 71
       SYMBOL_LINK "EgtProp" 0
       /begin IF_DATA XCP
         /begin DAQ_EVENT FIXED_EVENT_LIST
-          "EVENT" 0x00
+          EVENT 0x00
         /end DAQ_EVENT
       /end IF_DATA
       /begin IF_DATA CANAPE_EXT
@@ -4030,7 +4030,7 @@ ASAP2_VERSION 1 71
       SYMBOL_LINK "EgtTarget" 0
       /begin IF_DATA XCP
         /begin DAQ_EVENT FIXED_EVENT_LIST
-          "EVENT" 0x00
+          EVENT 0x00
         /end DAQ_EVENT
       /end IF_DATA
       /begin IF_DATA CANAPE_EXT
@@ -4049,7 +4049,7 @@ ASAP2_VERSION 1 71
       SYMBOL_LINK "EngTemp" 0
       /begin IF_DATA XCP
         /begin DAQ_EVENT FIXED_EVENT_LIST
-          "EVENT" 0x00
+          EVENT 0x00
         /end DAQ_EVENT
       /end IF_DATA
       /begin IF_DATA CANAPE_EXT
@@ -4355,7 +4355,7 @@ ASAP2_VERSION 1 71
       SYMBOL_LINK "FuelPressure" 0
       /begin IF_DATA XCP
         /begin DAQ_EVENT FIXED_EVENT_LIST
-          "EVENT" 0x00
+          EVENT 0x00
         /end DAQ_EVENT
       /end IF_DATA
       /begin IF_DATA CANAPE_EXT
@@ -4474,7 +4474,7 @@ ASAP2_VERSION 1 71
       SYMBOL_LINK "FuelTable" 0
       /begin IF_DATA XCP
         /begin DAQ_EVENT FIXED_EVENT_LIST
-          "EVENT" 0x00
+          EVENT 0x00
         /end DAQ_EVENT
       /end IF_DATA
       /begin IF_DATA CANAPE_EXT
@@ -4493,7 +4493,7 @@ ASAP2_VERSION 1 71
       SYMBOL_LINK "FuelTemp" 0
       /begin IF_DATA XCP
         /begin DAQ_EVENT FIXED_EVENT_LIST
-          "EVENT" 0x00
+          EVENT 0x00
         /end DAQ_EVENT
       /end IF_DATA
       /begin IF_DATA CANAPE_EXT
@@ -4546,7 +4546,7 @@ ASAP2_VERSION 1 71
       SYMBOL_LINK "Fuel_AD_Comp" 0
       /begin IF_DATA XCP
         /begin DAQ_EVENT FIXED_EVENT_LIST
-          "EVENT" 0x00
+          EVENT 0x00
         /end DAQ_EVENT
       /end IF_DATA
       /begin IF_DATA CANAPE_EXT
@@ -4564,7 +4564,7 @@ ASAP2_VERSION 1 71
       SYMBOL_LINK "Fuel_EngTemp_Comp" 0
       /begin IF_DATA XCP
         /begin DAQ_EVENT FIXED_EVENT_LIST
-          "EVENT" 0x00
+          EVENT 0x00
         /end DAQ_EVENT
       /end IF_DATA
       /begin IF_DATA CANAPE_EXT
@@ -4583,7 +4583,7 @@ ASAP2_VERSION 1 71
       SYMBOL_LINK "Fuel_Final" 0
       /begin IF_DATA XCP
         /begin DAQ_EVENT FIXED_EVENT_LIST
-          "EVENT" 0x00
+          EVENT 0x00
         /end DAQ_EVENT
       /end IF_DATA
       /begin IF_DATA CANAPE_EXT
@@ -4602,7 +4602,7 @@ ASAP2_VERSION 1 71
       SYMBOL_LINK "Fuel_OnTime_Comp" 0
       /begin IF_DATA XCP
         /begin DAQ_EVENT FIXED_EVENT_LIST
-          "EVENT" 0x00
+          EVENT 0x00
         /end DAQ_EVENT
       /end IF_DATA
       /begin IF_DATA CANAPE_EXT
@@ -4647,7 +4647,7 @@ ASAP2_VERSION 1 71
       SYMBOL_LINK "GovMode" 0
       /begin IF_DATA XCP
         /begin DAQ_EVENT FIXED_EVENT_LIST
-          "EVENT" 0x00
+          EVENT 0x00
         /end DAQ_EVENT
       /end IF_DATA
       /begin IF_DATA CANAPE_EXT
@@ -4835,7 +4835,7 @@ ASAP2_VERSION 1 71
       SYMBOL_LINK "InjDuration" 0
       /begin IF_DATA XCP
         /begin DAQ_EVENT FIXED_EVENT_LIST
-          "EVENT" 0x00
+          EVENT 0x00
         /end DAQ_EVENT
       /end IF_DATA
       /begin IF_DATA CANAPE_EXT
@@ -4980,7 +4980,7 @@ ASAP2_VERSION 1 71
       SYMBOL_LINK "Kd" 0
       /begin IF_DATA XCP
         /begin DAQ_EVENT FIXED_EVENT_LIST
-          "EVENT" 0x00
+          EVENT 0x00
         /end DAQ_EVENT
       /end IF_DATA
       /begin IF_DATA CANAPE_EXT
@@ -4998,7 +4998,7 @@ ASAP2_VERSION 1 71
       SYMBOL_LINK "Ki" 0
       /begin IF_DATA XCP
         /begin DAQ_EVENT FIXED_EVENT_LIST
-          "EVENT" 0x00
+          EVENT 0x00
         /end DAQ_EVENT
       /end IF_DATA
       /begin IF_DATA CANAPE_EXT
@@ -5016,7 +5016,7 @@ ASAP2_VERSION 1 71
       SYMBOL_LINK "Ki_Pump" 0
       /begin IF_DATA XCP
         /begin DAQ_EVENT FIXED_EVENT_LIST
-          "EVENT" 0x00
+          EVENT 0x00
         /end DAQ_EVENT
       /end IF_DATA
       /begin IF_DATA CANAPE_EXT
@@ -5034,7 +5034,7 @@ ASAP2_VERSION 1 71
       SYMBOL_LINK "Kp" 0
       /begin IF_DATA XCP
         /begin DAQ_EVENT FIXED_EVENT_LIST
-          "EVENT" 0x00
+          EVENT 0x00
         /end DAQ_EVENT
       /end IF_DATA
       /begin IF_DATA CANAPE_EXT
@@ -5052,7 +5052,7 @@ ASAP2_VERSION 1 71
       SYMBOL_LINK "Kp_Pump" 0
       /begin IF_DATA XCP
         /begin DAQ_EVENT FIXED_EVENT_LIST
-          "EVENT" 0x00
+          EVENT 0x00
         /end DAQ_EVENT
       /end IF_DATA
       /begin IF_DATA CANAPE_EXT
@@ -5099,7 +5099,7 @@ ASAP2_VERSION 1 71
       SYMBOL_LINK "MAP" 0
       /begin IF_DATA XCP
         /begin DAQ_EVENT FIXED_EVENT_LIST
-          "EVENT" 0x00
+          EVENT 0x00
         /end DAQ_EVENT
       /end IF_DATA
       /begin IF_DATA CANAPE_EXT
@@ -5120,7 +5120,7 @@ ASAP2_VERSION 1 71
       SYMBOL_LINK "MapCrank" 0
       /begin IF_DATA XCP
         /begin DAQ_EVENT FIXED_EVENT_LIST
-          "EVENT" 0x00
+          EVENT 0x00
         /end DAQ_EVENT
       /end IF_DATA
       /begin IF_DATA CANAPE_EXT
@@ -5312,7 +5312,7 @@ ASAP2_VERSION 1 71
       SYMBOL_LINK "OpMode" 0
       /begin IF_DATA XCP
         /begin DAQ_EVENT FIXED_EVENT_LIST
-          "EVENT" 0x00
+          EVENT 0x00
         /end DAQ_EVENT
       /end IF_DATA
       /begin IF_DATA CANAPE_EXT
@@ -5346,7 +5346,7 @@ ASAP2_VERSION 1 71
       SYMBOL_LINK "PumpCommand" 0
       /begin IF_DATA XCP
         /begin DAQ_EVENT FIXED_EVENT_LIST
-          "EVENT" 0x00
+          EVENT 0x00
         /end DAQ_EVENT
       /end IF_DATA
       /begin IF_DATA CANAPE_EXT
@@ -5364,7 +5364,7 @@ ASAP2_VERSION 1 71
       SYMBOL_LINK "PumpDuty" 0
       /begin IF_DATA XCP
         /begin DAQ_EVENT FIXED_EVENT_LIST
-          "EVENT" 0x00
+          EVENT 0x00
         /end DAQ_EVENT
       /end IF_DATA
       /begin IF_DATA CANAPE_EXT
@@ -5382,7 +5382,7 @@ ASAP2_VERSION 1 71
       SYMBOL_LINK "Pump_FF" 0
       /begin IF_DATA XCP
         /begin DAQ_EVENT FIXED_EVENT_LIST
-          "EVENT" 0x00
+          EVENT 0x00
         /end DAQ_EVENT
       /end IF_DATA
       /begin IF_DATA CANAPE_EXT
@@ -5400,7 +5400,7 @@ ASAP2_VERSION 1 71
       SYMBOL_LINK "RPM" 0
       /begin IF_DATA XCP
         /begin DAQ_EVENT FIXED_EVENT_LIST
-          "EVENT" 0x00
+          EVENT 0x00
         /end DAQ_EVENT
       /end IF_DATA
       /begin IF_DATA CANAPE_EXT
@@ -5419,7 +5419,7 @@ ASAP2_VERSION 1 71
       SYMBOL_LINK "RPMdes" 0
       /begin IF_DATA XCP
         /begin DAQ_EVENT FIXED_EVENT_LIST
-          "EVENT" 0x00
+          EVENT 0x00
         /end DAQ_EVENT
       /end IF_DATA
       /begin IF_DATA CANAPE_EXT
@@ -5463,7 +5463,7 @@ ASAP2_VERSION 1 71
       SYMBOL_LINK "Roughness" 0
       /begin IF_DATA XCP
         /begin DAQ_EVENT FIXED_EVENT_LIST
-          "EVENT" 0x00
+          EVENT 0x00
         /end DAQ_EVENT
       /end IF_DATA
       /begin IF_DATA CANAPE_EXT
@@ -5652,7 +5652,7 @@ ASAP2_VERSION 1 71
       SYMBOL_LINK "ServoPulseWidth" 0
       /begin IF_DATA XCP
         /begin DAQ_EVENT FIXED_EVENT_LIST
-          "EVENT" 0x00
+          EVENT 0x00
         /end DAQ_EVENT
       /end IF_DATA
       /begin IF_DATA CANAPE_EXT
@@ -5722,7 +5722,7 @@ ASAP2_VERSION 1 71
       SYMBOL_LINK "SparkDwell" 0
       /begin IF_DATA XCP
         /begin DAQ_EVENT FIXED_EVENT_LIST
-          "EVENT" 0x00
+          EVENT 0x00
         /end DAQ_EVENT
       /end IF_DATA
       /begin IF_DATA CANAPE_EXT
@@ -5764,7 +5764,7 @@ ASAP2_VERSION 1 71
       SYMBOL_LINK "SparkEnergy" 0
       /begin IF_DATA XCP
         /begin DAQ_EVENT FIXED_EVENT_LIST
-          "EVENT" 0x00
+          EVENT 0x00
         /end DAQ_EVENT
       /end IF_DATA
       /begin IF_DATA CANAPE_EXT
@@ -5820,7 +5820,7 @@ ASAP2_VERSION 1 71
       SYMBOL_LINK "SparkTiming" 0
       /begin IF_DATA XCP
         /begin DAQ_EVENT FIXED_EVENT_LIST
-          "EVENT" 0x00
+          EVENT 0x00
         /end DAQ_EVENT
       /end IF_DATA
       /begin IF_DATA CANAPE_EXT
@@ -5874,7 +5874,7 @@ ASAP2_VERSION 1 71
       SYMBOL_LINK "SystemVoltage" 0
       /begin IF_DATA XCP
         /begin DAQ_EVENT FIXED_EVENT_LIST
-          "EVENT" 0x00
+          EVENT 0x00
         /end DAQ_EVENT
       /end IF_DATA
       /begin IF_DATA CANAPE_EXT
@@ -5893,7 +5893,7 @@ ASAP2_VERSION 1 71
       SYMBOL_LINK "fault_active_byte4" 0
       /begin IF_DATA XCP
         /begin DAQ_EVENT FIXED_EVENT_LIST
-          "EVENT" 0x00
+          EVENT 0x00
         /end DAQ_EVENT
       /end IF_DATA
       /begin IF_DATA CANAPE_EXT
@@ -5951,7 +5951,7 @@ ASAP2_VERSION 1 71
       SYMBOL_LINK "ThrottlePosAct" 0
       /begin IF_DATA XCP
         /begin DAQ_EVENT FIXED_EVENT_LIST
-          "EVENT" 0x00
+          EVENT 0x00
         /end DAQ_EVENT
       /end IF_DATA
       /begin IF_DATA CANAPE_EXT
@@ -5969,7 +5969,7 @@ ASAP2_VERSION 1 71
       SYMBOL_LINK "ThrottlePosDes" 0
       /begin IF_DATA XCP
         /begin DAQ_EVENT FIXED_EVENT_LIST
-          "EVENT" 0x00
+          EVENT 0x00
         /end DAQ_EVENT
       /end IF_DATA
       /begin IF_DATA CANAPE_EXT
@@ -6066,7 +6066,7 @@ ASAP2_VERSION 1 71
       SYMBOL_LINK "TorqDiff" 0
       /begin IF_DATA XCP
         /begin DAQ_EVENT FIXED_EVENT_LIST
-          "EVENT" 0x00
+          EVENT 0x00
         /end DAQ_EVENT
       /end IF_DATA
       /begin IF_DATA CANAPE_EXT
@@ -6092,7 +6092,7 @@ ASAP2_VERSION 1 71
       SYMBOL_LINK "TorqProp" 0
       /begin IF_DATA XCP
         /begin DAQ_EVENT FIXED_EVENT_LIST
-          "EVENT" 0x00
+          EVENT 0x00
         /end DAQ_EVENT
       /end IF_DATA
       /begin IF_DATA CANAPE_EXT
@@ -6111,7 +6111,7 @@ ASAP2_VERSION 1 71
       SYMBOL_LINK "Torque" 0
       /begin IF_DATA XCP
         /begin DAQ_EVENT FIXED_EVENT_LIST
-          "EVENT" 0x00
+          EVENT 0x00
         /end DAQ_EVENT
       /end IF_DATA
       /begin IF_DATA CANAPE_EXT
@@ -6143,7 +6143,7 @@ ASAP2_VERSION 1 71
       SYMBOL_LINK "TorqueFeedForward" 0
       /begin IF_DATA XCP
         /begin DAQ_EVENT FIXED_EVENT_LIST
-          "EVENT" 0x00
+          EVENT 0x00
         /end DAQ_EVENT
       /end IF_DATA
       /begin IF_DATA CANAPE_EXT
@@ -6183,7 +6183,7 @@ ASAP2_VERSION 1 71
       SYMBOL_LINK "TorqueMax" 0
       /begin IF_DATA XCP
         /begin DAQ_EVENT FIXED_EVENT_LIST
-          "EVENT" 0x00
+          EVENT 0x00
         /end DAQ_EVENT
       /end IF_DATA
       /begin IF_DATA CANAPE_EXT

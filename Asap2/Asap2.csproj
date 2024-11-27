@@ -138,6 +138,11 @@
       <Arguments>/gplex /nolines</Arguments>
     </YaccFile>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Asap2.Language.reidentifier.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="CopyPackage" AfterTargets="Pack">
     <Copy SourceFiles="$(OutputPath)\$(PackageId).$(PackageVersion).nupkg" DestinationFolder="..\out" />

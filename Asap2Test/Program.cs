@@ -37,6 +37,7 @@ namespace Asap2Test
                 Console.WriteLine(events.eventid);
 
             }
+            Console.ReadLine();
         }
     }
 }

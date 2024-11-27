@@ -1363,7 +1363,7 @@ daq_event        : BEGIN DAQ_EVENT daq_event_data END DAQ_EVENT {
                 }
                 ;
 
-daq_event_data    : IDENTIFIER QUOTED_STRING NUMBER{
+daq_event_data    : IDENTIFIER IDENTIFIER NUMBER{
                     // TODO: Implement
                     $$ = new DAQ_EVENT(@$, $3);
                 }
@@ -1409,7 +1409,7 @@ event        : BEGIN EVENT event_data END EVENT {
                 }
                 ;
 
-event_data   : QUOTED_STRING QUOTED_STRING NUMBER QUOTED_STRING NUMBER NUMBER NUMBER NUMBER{
+event_data   : QUOTED_STRING QUOTED_STRING NUMBER IDENTIFIER NUMBER NUMBER NUMBER NUMBER{
                     $$ = new EVENT(@$, $1, $2, $3, $4, $5, $6, $7, $8);
                 };
 
