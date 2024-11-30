@@ -238,7 +238,6 @@ namespace QUT.Gppg
         /// </summary>
         /// <returns>True if parse succeeds, else false for
         /// unrecoverable errors</returns>
-        private int daq_read = 0;
         private string GetPrevTokenName()
         {
             var valStack = ValueStack[StateStack.tos - 1];

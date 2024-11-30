@@ -193,6 +193,21 @@ QP_BLOB                         { return Make(Token.QP_BLOB); }
 SOURCE                          { return Make(Token.SOURCE); }
 RASTER                          { return Make(Token.RASTER); }
 SEED_KEY                        { return Make(Token.SEED_KEY); }
+CHECKSUM_PARAM                  { return Make(Token.CHECKSUM_PARAM); }
+DEFINED_PAGES                   { return Make(Token.DEFINED_PAGES); }
+OPTIONAL_CMD                    { return Make(Token.OPTIONAL_CMD); }
+DISTAB_CFG                      { return Make(Token.DISTAB_CFG); }
+CODE_CHK                        { return Make(Token.CODE_CHK); }
+ETK_CFG                         { return Make(Token.ETK_CFG); }
+RESERVED_DISTAB_MEMORY          { return Make(Token.RESERVED_DISTAB_MEMORY); }
+K_LINE                          { return Make(Token.K_LINE); }
+CAN                             { return Make(Token.CAN); }
+ADDRESS                         { return Make(Token.ADDRESS); }
+NETWORK_LIMITS                  { return Make(Token.NETWORK_LIMITS); }
+DATA_ACCESS                     { return Make(Token.DATA_ACCESS); }
+COPY                            { return Make(Token.COPY); }
+FLASH                           { return Make(Token.FLASH); }
+DIAG_BAUD                       { return Make(Token.DIAG_BAUD); }
 A2ML                            { yy_push_state (STATE_A2ML); yylval.sb = new StringBuilder(); }
 "\/include"                     { yy_push_state(STATE_INCL); }
 \"                              { yy_push_state(STATE_STRING); yylval.sb = new StringBuilder(); }

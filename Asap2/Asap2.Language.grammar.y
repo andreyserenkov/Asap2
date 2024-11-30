@@ -82,6 +82,13 @@
             public QP_BLOB qp_blob;
             public RASTER raster;
             public SEED_KEY seed_key;
+            public CHECKSUM_PARAM checksum_param;
+            public DEFINED_PAGES defined_pages;
+            public CAN can;
+            public ADDRESS address;
+            public COPY copy;
+            public FLASH flash;
+            public DIAG_BAUD diag_baud;
 }
 
 %start Asap2File
@@ -245,6 +252,21 @@
 %token QP_BLOB
 %token RASTER
 %token SEED_KEY
+%token CHECKSUM_PARAM
+%token DEFINED_PAGES
+%token OPTIONAL_CMD
+%token DISTAB_CFG
+%token CODE_CHK
+%token ETK_CFG
+%token RESERVED_DISTAB_MEMORY
+%token K_LINE
+%token CAN
+%token ADDRESS
+%token NETWORK_LIMITS
+%token DATA_ACCESS
+%token COPY
+%token FLASH
+%token DIAG_BAUD
 
 %token maxParseToken COMMENT
 
@@ -373,6 +395,20 @@
 %type <raster>              raster_data
 %type <seed_key>            seed_key
 %type <seed_key>            seed_key_data
+%type <checksum_param>      checksum_param
+%type <checksum_param>      checksum_param_data
+%type <defined_pages>       defined_pages
+%type <defined_pages>       defined_pages_data
+%type <can>                 can
+%type <can>                 can_data
+%type <address>             address
+%type <address>             address_data
+%type <copy>                copy
+%type <copy>                copy_data
+%type <flash>               flash
+%type <flash>               flash_data
+%type <diag_baud>           diag_baud
+%type <diag_baud>           diag_baud_data
 
 %%
 
@@ -1495,9 +1531,12 @@ checksum        : BEGIN CHECKSUM checksum_data END CHECKSUM {
                     $$ = $3;
                 }
                 ;
-
-checksum_data   : IDENTIFIER IDENTIFIER NUMBER IDENTIFIER QUOTED_STRING{
+                 
+checksum_data   : IDENTIFIER IDENTIFIER NUMBER IDENTIFIER QUOTED_STRING {
                     $$ = new CHECKSUM(@$, $1, $3, $5);
+                }
+                | NUMBER NUMBER NUMBER IDENTIFIER IDENTIFIER NUMBER{
+                    $$ = new CHECKSUM(@$, $1, $2, $3, $4, $6);
                 };
 
 page        : BEGIN PAGE page_data END PAGE {
@@ -2176,8 +2215,70 @@ tp_blob_data
     : NUMBER NUMBER {
         $$ = new TP_BLOB(@$, (UInt64)$1, (UInt64)$2);
     }
-    | NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER {
-        $$ = new TP_BLOB(@$, (UInt64)$1, (UInt64)$2, (UInt64)$3, (UInt64)$4, (UInt64)$5, (UInt64)$6);
+    | NUMBER IDENTIFIER NUMBER {
+        $$ = new TP_BLOB(@$, (UInt64)$1, $2, (UInt64)$3);
+    }
+    | NUMBER IDENTIFIER IDENTIFIER {
+        $$ = new TP_BLOB(@$, (UInt64)$1, $2, $3);
+    }
+    | NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER IDENTIFIER NUMBER IDENTIFIER NUMBER IDENTIFIER NUMBER IDENTIFIER NUMBER IDENTIFIER NUMBER IDENTIFIER IDENTIFIER IDENTIFIER IDENTIFIER IDENTIFIER IDENTIFIER {
+        $$ = new TP_BLOB(@$, (UInt64)$1, (UInt64)$2, (UInt64)$3, (UInt64)$4, (UInt64)$5, (UInt64)$6, $7, (UInt64)$8, $9, (UInt64)$10, $11, (UInt64)$12, $13, (UInt64)$14, $15, (UInt64)$16, $17, $18, $19, $20, $21, $22);
+    }
+    | tp_blob_data diag_baud {
+        $$ = $1;
+        $$.diag_baud.Add($2);
+    }
+    | tp_blob_data flash {
+        $$ = $1;
+        $$.flash = $2;
+    }
+    | tp_blob_data can {
+        $$ = $1;
+        $$.can = $2;
+    }
+    | tp_blob_data copy {
+        $$ = $1;
+        $$.copy = $2;
+    }
+    | tp_blob_data checksum_param {
+        $$ = $1;
+        $$.checksum_param = $2;
+    }
+    | tp_blob_data checksum {
+        $$ = $1;
+        $$.checksum = $2;
+    }
+    | tp_blob_data defined_pages {
+        $$ = $1;
+        $$.defined_pages.Add($2);
+    }
+    | tp_blob_data OPTIONAL_CMD NUMBER {
+        $$ = $1;
+        $$.optional_cmd.Add((UInt64)$3);
+    }
+    | tp_blob_data K_LINE IDENTIFIER NUMBER NUMBER {
+        $$ = $1;
+         $$.k_line = new K_LINE(@$, $3, $4, $5);
+    }
+    | tp_blob_data DISTAB_CFG NUMBER NUMBER NUMBER NUMBER NUMBER IDENTIFIER{
+        $$ = $1;
+        $$.distab_cfg = new DISTAB_CFG(@$, $3, $4, $5, $6, $7, $8);
+    }
+    | tp_blob_data CODE_CHK NUMBER NUMBER NUMBER NUMBER IDENTIFIER IDENTIFIER{
+        $$ = $1;
+        $$.code_chk = new CODE_CHK(@$, $3, $4, $5, $6, $8);
+    }
+    | tp_blob_data ETK_CFG NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER{
+        $$ = $1;
+        $$.etk_cfg = new ETK_CFG(@$, $3, $4, $5, $6, $7, $8, $9);
+    }
+    | tp_blob_data RESERVED_DISTAB_MEMORY NUMBER NUMBER IDENTIFIER IDENTIFIER IDENTIFIER NUMBER NUMBER NUMBER NUMBER NUMBER {
+        $$ = $1;
+        $$.reserved_distab_memory = new RESERVED_DISTAB_MEMORY(@$, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12);
+    }
+    | tp_blob_data DATA_ACCESS NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER {
+        $$ = $1;
+        $$.data_access = new DATA_ACCESS(@$,  (UInt64)$3, (UInt64)$4, (UInt64)$5, (UInt64)$6, (UInt64)$7, (UInt64)$8);
     }
     ;
 
@@ -2190,6 +2291,12 @@ source
 source_data
     : QUOTED_STRING NUMBER NUMBER {
         $$ = new SOURCE(@$, $1, $2, $3);
+    }
+    | QUOTED_STRING NUMBER NUMBER IDENTIFIER IDENTIFIER IDENTIFIER NUMBER NUMBER NUMBER NUMBER NUMBER{
+        $$ = new SOURCE(@$, $1, $2, $3, $5, $6, $7, $8, $9, $10, $11);
+    }
+    | QUOTED_STRING NUMBER NUMBER IDENTIFIER NUMBER NUMBER IDENTIFIER NUMBER IDENTIFIER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER {
+        $$ = new SOURCE(@$, $1, $2, $3, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19);
     }
     |  source_data qp_blob {
         $$ = $1;
@@ -2233,6 +2340,99 @@ seed_key_data
     }
     ;
 
+checksum_param
+    : BEGIN CHECKSUM_PARAM checksum_param_data END CHECKSUM_PARAM {
+        $$ = $3;
+    }
+    ;
+
+checksum_param_data
+    : NUMBER NUMBER IDENTIFIER IDENTIFIER {
+        $$ = new CHECKSUM_PARAM(@$, $1, $2, $4);
+    }
+    ;
+
+defined_pages
+    : BEGIN DEFINED_PAGES defined_pages_data END DEFINED_PAGES {
+        $$ = $3;
+    }
+    ;
+
+defined_pages_data
+    : NUMBER QUOTED_STRING NUMBER NUMBER NUMBER IDENTIFIER_list {
+        $$ = new DEFINED_PAGES(@$, (UInt64)$1, $2, (UInt64)$3, (UInt64)$4, (UInt64)$5, $6);
+    }
+    ;
+
+can
+    : BEGIN CAN can_data END CAN {
+        $$ = $3;
+    }
+    ;
+
+can_data
+    : NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER {
+        $$ = new CAN(@$, (UInt64)$1, (UInt64)$2, (UInt64)$3, (UInt64)$4, (UInt64)$5, (UInt64)$6);
+    }
+    |  can_data address {
+        $$ = $1;
+        $$.address = $2;
+    }
+    | can_data NETWORK_LIMITS NUMBER NUMBER {
+        $$ = $1;
+        $$.network_limits = new NETWORK_LIMITS(@$, $3, $4);
+    }
+    
+    ;
+
+
+
+address
+    : BEGIN ADDRESS address_data END ADDRESS {
+        $$ = $3;
+    }
+    ;
+
+address_data
+    : NUMBER NUMBER {
+        $$ = new ADDRESS(@$, $1, $2, 0, 0);
+    }
+    ;
+
+copy
+    : BEGIN COPY copy_data END COPY {
+        $$ = $3;
+    }
+    ;
+
+copy_data
+    : IDENTIFIER NUMBER {
+        $$ = new COPY(@$, $1, $2);
+    }
+    ;
+
+flash
+    : BEGIN FLASH flash_data END FLASH {
+        $$ = $3;
+    }
+    ;
+
+flash_data
+    : IDENTIFIER NUMBER IDENTIFIER IDENTIFIER NUMBER IDENTIFIER NUMBER NUMBER NUMBER{
+        $$ = new FLASH(@$, $1, $2, $3, $5, $7, $8, $9);
+    }
+    ;
+diag_baud
+    : BEGIN DIAG_BAUD diag_baud_data END DIAG_BAUD {
+        $$ = $3;
+    }
+    ;
+
+diag_baud_data
+    : NUMBER NUMBER IDENTIFIER NUMBER{
+        $$ = new DIAG_BAUD(@$, $1, $2, $4);
+    }
+    ;
 
 
 %%

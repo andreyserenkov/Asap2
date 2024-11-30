@@ -21,24 +21,26 @@ namespace Asap2
             r[identNum2] = num2;
             r[identNum3] = num3;
             r[identNum4] = num4;
-            this.daqNumber = daqNumber;
             this.length = r["LENGTH"];
             this.canIdFixed = r["CAN_ID_FIXED"];
-            this.firstPid = r["CAN_ID_FIXED"];
+            this.firstPid = r["FIRST_PID"];
             this.raster = r["RASTER"];
+
+            this.daqNumber = daqNumber;
         }
+
         [Element(1, IsArgument = true)]
-        public decimal daqNumber { get; set; }
+        public decimal daqNumber { get; private set; }
 
         [Element(2, IsArgument = true)]
-        public decimal length { get; set; }
+        public decimal length { get; private set; }
 
         [Element(3, IsArgument = true)]
-        public decimal canIdFixed { get; set; }
+        public decimal canIdFixed { get; private set; }
         [Element(4, IsArgument = true)]
-        public decimal firstPid { get; set; }
+        public decimal firstPid { get; private set; }
         [Element(5, IsArgument = true)]
-        public decimal raster { get; set; }
+        public decimal raster { get; private set; }
 
     }
 }

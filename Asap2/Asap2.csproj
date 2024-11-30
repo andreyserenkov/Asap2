@@ -67,19 +67,33 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Asap2Tree\ADDRESS.cs" />
     <Compile Include="Asap2Tree\Asap2Base.cs" />
     <Compile Include="Asap2Tree\Asap2File.cs" />
     <Compile Include="Asap2Tree\AXIS_PTS.cs" />
+    <Compile Include="Asap2Tree\COPY.cs" />
+    <Compile Include="Asap2Tree\DATA_ACCESS.cs" />
+    <Compile Include="Asap2Tree\CAN.cs" />
+    <Compile Include="Asap2Tree\CHECKSUM_PARAM.cs" />
     <Compile Include="Asap2Tree\DAQ_EVENT.cs" />
     <Compile Include="Asap2Tree\CAL_PARAM_GROUP.cs" />
     <Compile Include="Asap2Tree\CHARACTERISTIC.cs" />
     <Compile Include="Asap2Tree\CHECKSUM.cs" />
     <Compile Include="Asap2Tree\COMPU_METHOD.cs" />
+    <Compile Include="Asap2Tree\DEFINED_PAGES.cs" />
+    <Compile Include="Asap2Tree\CODE_CHK.cs" />
+    <Compile Include="Asap2Tree\DIAG_BAUD.cs" />
+    <Compile Include="Asap2Tree\DISTAB_CFG.cs" />
+    <Compile Include="Asap2Tree\ETK_CFG.cs" />
+    <Compile Include="Asap2Tree\FLASH.cs" />
+    <Compile Include="Asap2Tree\K_LINE.cs" />
+    <Compile Include="Asap2Tree\NETWORK_LIMITS.cs" />
     <Compile Include="Asap2Tree\PGM.cs" />
     <Compile Include="Asap2Tree\PAG.cs" />
     <Compile Include="Asap2Tree\DAQ_LIST.cs" />
     <Compile Include="Asap2Tree\EVENT.cs" />
     <Compile Include="Asap2Tree\RASTER.cs" />
+    <Compile Include="Asap2Tree\RESERVED_DISTAB_MEMORY.cs" />
     <Compile Include="Asap2Tree\SECTOR.cs" />
     <Compile Include="Asap2Tree\QP_BLOB.cs" />
     <Compile Include="Asap2Tree\SEED_KEY.cs" />
