@@ -120,6 +120,8 @@ namespace Asap2
         public CHECKSUM checksum { get; set; }
         public COPY copy { get; set; }
         public FLASH flash { get; set; }
+        public TIME_DEF time_def { get; set; }
+        public PAGE_SWITCH page_switch { get; set; }
     }
 
 }

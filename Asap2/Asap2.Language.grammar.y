@@ -89,6 +89,8 @@
             public COPY copy;
             public FLASH flash;
             public DIAG_BAUD diag_baud;
+            public TIME_DEF time_def;
+            public PAGE_SWITCH page_switch;
 }
 
 %start Asap2File
@@ -267,6 +269,10 @@
 %token COPY
 %token FLASH
 %token DIAG_BAUD
+%token TIME_DEF
+%token KWP_TIMING
+%token USDTP_TIMING
+%token PAGE_SWITCH
 
 %token maxParseToken COMMENT
 
@@ -409,6 +415,10 @@
 %type <flash>               flash_data
 %type <diag_baud>           diag_baud
 %type <diag_baud>           diag_baud_data
+%type <time_def>            time_def
+%type <time_def>            time_def_data
+%type <page_switch>         page_switch
+%type <page_switch>         page_switch_data
 
 %%
 
@@ -2224,9 +2234,17 @@ tp_blob_data
     | NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER IDENTIFIER NUMBER IDENTIFIER NUMBER IDENTIFIER NUMBER IDENTIFIER NUMBER IDENTIFIER NUMBER IDENTIFIER IDENTIFIER IDENTIFIER IDENTIFIER IDENTIFIER IDENTIFIER {
         $$ = new TP_BLOB(@$, (UInt64)$1, (UInt64)$2, (UInt64)$3, (UInt64)$4, (UInt64)$5, (UInt64)$6, $7, (UInt64)$8, $9, (UInt64)$10, $11, (UInt64)$12, $13, (UInt64)$14, $15, (UInt64)$16, $17, $18, $19, $20, $21, $22);
     }
+    | tp_blob_data page_switch {
+        $$ = $1;
+        $$.page_switch = $2;
+    }
     | tp_blob_data diag_baud {
         $$ = $1;
         $$.diag_baud.Add($2);
+    }
+    | tp_blob_data time_def {
+        $$ = $1;
+        $$.time_def = $2;
     }
     | tp_blob_data flash {
         $$ = $1;
@@ -2433,7 +2451,36 @@ diag_baud_data
         $$ = new DIAG_BAUD(@$, $1, $2, $4);
     }
     ;
+time_def
+    : BEGIN TIME_DEF time_def_data END TIME_DEF {
+        $$ = $3;
+    }
+    ;
 
+time_def_data
+    : {
+        $$ = new TIME_DEF(@$);
+    }
+    | time_def_data KWP_TIMING NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER {
+        $$ = $1;
+        $$.kwp_timing.Add(new KWP_TIMING(@$, $3, $4, $5, $6, $7, $8));
+    }
+    | time_def_data USDTP_TIMING NUMBER NUMBER NUMBER{
+        $$ = $1;
+        $$.usdtp_timing.Add(new USDTP_TIMING(@$, $3, $4, $5));
+    }
+    ;
+page_switch
+    : BEGIN PAGE_SWITCH page_switch_data END PAGE_SWITCH {
+        $$ = $3;
+    }
+    ;
+
+page_switch_data
+    : IDENTIFIER IDENTIFIER NUMBER IDENTIFIER NUMBER IDENTIFIER NUMBER NUMBER{
+        $$ = new PAGE_SWITCH(@$, $1, $3, $5, $7, $8);
+    }
+    ;
 
 %%
 

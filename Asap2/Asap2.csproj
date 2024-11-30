@@ -86,6 +86,9 @@
     <Compile Include="Asap2Tree\DISTAB_CFG.cs" />
     <Compile Include="Asap2Tree\ETK_CFG.cs" />
     <Compile Include="Asap2Tree\FLASH.cs" />
+    <Compile Include="Asap2Tree\PAGE_SWITCH.cs" />
+    <Compile Include="Asap2Tree\USDTP_TIMING.cs" />
+    <Compile Include="Asap2Tree\KWP_TIMING.cs" />
     <Compile Include="Asap2Tree\K_LINE.cs" />
     <Compile Include="Asap2Tree\NETWORK_LIMITS.cs" />
     <Compile Include="Asap2Tree\PGM.cs" />
@@ -106,6 +109,7 @@
     <Compile Include="Asap2Tree\PAGE.cs" />
     <Compile Include="Asap2Tree\PROTOCOL_LAYER.cs" />
     <Compile Include="Asap2Tree\SEGMENT.cs" />
+    <Compile Include="Asap2Tree\TIME_DEF.cs" />
     <Compile Include="Asap2Tree\TP_BLOB.cs" />
     <Compile Include="Asap2Tree\XCP_ON_CAN.cs" />
     <Compile Include="Attributes.cs" />
