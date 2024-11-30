@@ -91,6 +91,8 @@
             public DIAG_BAUD diag_baud;
             public TIME_DEF time_def;
             public PAGE_SWITCH page_switch;
+            public SESSION session;
+            public TransportProtocolVersion transportProtocolVersion;
 }
 
 %start Asap2File
@@ -273,6 +275,8 @@
 %token KWP_TIMING
 %token USDTP_TIMING
 %token PAGE_SWITCH
+%token SESSION
+%token TransportProtocolVersion
 
 %token maxParseToken COMMENT
 
@@ -419,6 +423,10 @@
 %type <time_def>            time_def_data
 %type <page_switch>         page_switch
 %type <page_switch>         page_switch_data
+%type <session>             session
+%type <session>             session_data
+%type <transportProtocolVersion> transportProtocolVersion
+%type <transportProtocolVersion> transportProtocolVersion_data
 
 %%
 
@@ -2234,6 +2242,10 @@ tp_blob_data
     | NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER IDENTIFIER NUMBER IDENTIFIER NUMBER IDENTIFIER NUMBER IDENTIFIER NUMBER IDENTIFIER NUMBER IDENTIFIER IDENTIFIER IDENTIFIER IDENTIFIER IDENTIFIER IDENTIFIER {
         $$ = new TP_BLOB(@$, (UInt64)$1, (UInt64)$2, (UInt64)$3, (UInt64)$4, (UInt64)$5, (UInt64)$6, $7, (UInt64)$8, $9, (UInt64)$10, $11, (UInt64)$12, $13, (UInt64)$14, $15, (UInt64)$16, $17, $18, $19, $20, $21, $22);
     }
+    | tp_blob_data session {
+        $$ = $1;
+        $$.session = $2;
+    }
     | tp_blob_data page_switch {
         $$ = $1;
         $$.page_switch = $2;
@@ -2392,6 +2404,13 @@ can_data
     : NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER {
         $$ = new CAN(@$, (UInt64)$1, (UInt64)$2, (UInt64)$3, (UInt64)$4, (UInt64)$5, (UInt64)$6);
     }
+    | NUMBER IDENTIFIER NUMBER IDENTIFIER NUMBER IDENTIFIER NUMBER IDENTIFIER NUMBER IDENTIFIER NUMBER {
+        $$ = new CAN(@$, (UInt64)$1, (UInt64)$3, (UInt64)$5, (UInt64)$7, (UInt64)$9, (UInt64)$11);
+    }
+    | can_data transportProtocolVersion {
+        $$ = $1;
+        $$.transportProtocolVersion = $2;
+    }
     |  can_data address {
         $$ = $1;
         $$.address = $2;
@@ -2481,6 +2500,31 @@ page_switch_data
         $$ = new PAGE_SWITCH(@$, $1, $3, $5, $7, $8);
     }
     ;
+
+session
+    : BEGIN SESSION session_data END SESSION {
+        $$ = $3;
+    }
+    ;
+
+session_data
+    : QUOTED_STRING NUMBER{
+        $$ = new SESSION(@$, $1, $2);
+    }
+    ;
+
+transportProtocolVersion
+    : BEGIN TransportProtocolVersion transportProtocolVersion_data END TransportProtocolVersion {
+        $$ = $3;
+    }
+    ;
+
+transportProtocolVersion_data
+    : IDENTIFIER{
+        $$ = new TransportProtocolVersion(@$, $1);
+    }
+    ;
+
 
 %%
 

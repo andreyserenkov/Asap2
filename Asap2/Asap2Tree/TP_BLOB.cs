@@ -122,6 +122,8 @@ namespace Asap2
         public FLASH flash { get; set; }
         public TIME_DEF time_def { get; set; }
         public PAGE_SWITCH page_switch { get; set; }
+        public SESSION session { get; set; }
+
     }
 
 }

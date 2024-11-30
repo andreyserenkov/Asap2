@@ -87,6 +87,8 @@
     <Compile Include="Asap2Tree\ETK_CFG.cs" />
     <Compile Include="Asap2Tree\FLASH.cs" />
     <Compile Include="Asap2Tree\PAGE_SWITCH.cs" />
+    <Compile Include="Asap2Tree\SESSION.cs" />
+    <Compile Include="Asap2Tree\TransportProtocolVersion.cs" />
     <Compile Include="Asap2Tree\USDTP_TIMING.cs" />
     <Compile Include="Asap2Tree\KWP_TIMING.cs" />
     <Compile Include="Asap2Tree\K_LINE.cs" />

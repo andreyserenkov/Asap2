@@ -212,6 +212,8 @@ TIME_DEF                        { return Make(Token.TIME_DEF); }
 KWP_TIMING                      { return Make(Token.KWP_TIMING); }
 USDTP_TIMING                    { return Make(Token.USDTP_TIMING); }
 PAGE_SWITCH                     { return Make(Token.PAGE_SWITCH); }
+SESSION                         { return Make(Token.SESSION); }
+TransportProtocolVersion        { return Make(Token.TransportProtocolVersion); }
 A2ML                            { yy_push_state (STATE_A2ML); yylval.sb = new StringBuilder(); }
 "\/include"                     { yy_push_state(STATE_INCL); }
 \"                              { yy_push_state(STATE_STRING); yylval.sb = new StringBuilder(); }
