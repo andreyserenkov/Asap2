@@ -41,6 +41,7 @@ namespace Asap2
         public ADDRESS address { get; set; }
         public NETWORK_LIMITS network_limits { get; set; }
         public TransportProtocolVersion transportProtocolVersion { get; set; }
-
+        public USDTP_TIMING usdtp_timing { get; set; }
+        public USDTP_TIMING_DEFAULTS usdtp_timing_defaults { get; set; }
     }
 }

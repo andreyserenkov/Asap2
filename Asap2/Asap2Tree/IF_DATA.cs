@@ -46,6 +46,8 @@ namespace Asap2
 
         [Element(11, IsArgument = false, Name = "RASTER", Comment = "RASTER for IF_DATA")]
         public SEED_KEY seed_key { get; set; }
+        [Element(12, IsArgument = false, Name = "RASTER", Comment = "KP_BLOB for IF_DATA")]
+        public KP_BLOB kp_blob { get; set; }
 
 
     }

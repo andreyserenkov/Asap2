@@ -92,6 +92,7 @@
             public TIME_DEF time_def;
             public PAGE_SWITCH page_switch;
             public SESSION session;
+            public KP_BLOB kp_blob;
             public TransportProtocolVersion transportProtocolVersion;
 }
 
@@ -277,8 +278,11 @@
 %token PAGE_SWITCH
 %token SESSION
 %token TransportProtocolVersion
-
+%token USDTP_TIMING_DEFAULTS
+%token USDTP_TIMING
+%token KP_BLOB
 %token maxParseToken COMMENT
+
 
 
 %type <deposit>             deposit
@@ -427,7 +431,8 @@
 %type <session>             session_data
 %type <transportProtocolVersion> transportProtocolVersion
 %type <transportProtocolVersion> transportProtocolVersion_data
-
+%type <kp_blob>             kp_blob
+%type <kp_blob>             kp_blob_data
 %%
 
 Asap2File
@@ -1403,9 +1408,22 @@ if_data_data    : IDENTIFIER {
                     $$ = $1;
                     $$.seed_key = $2;
                 }
+                | if_data_data kp_blob {
+                    $$ = $1;
+                    $$.kp_blob = $2;
+                }
                 ;
 
 
+kp_blob         : BEGIN KP_BLOB kp_blob_data END KP_BLOB {
+                    $$ = $3;
+                }
+                ;
+
+kp_blob_data    : IDENTIFIER QUOTED_STRING IDENTIFIER QUOTED_STRING {
+                    $$ = new KP_BLOB(@$, $1, $2, $3, $4);
+                }
+                ;
 
 pgm        : BEGIN PGM pgm_data END PGM {
                     $$ = $3;
@@ -2310,6 +2328,7 @@ tp_blob_data
         $$ = $1;
         $$.data_access = new DATA_ACCESS(@$,  (UInt64)$3, (UInt64)$4, (UInt64)$5, (UInt64)$6, (UInt64)$7, (UInt64)$8);
     }
+    
     ;
 
 source
@@ -2415,11 +2434,18 @@ can_data
         $$ = $1;
         $$.address = $2;
     }
-    | can_data NETWORK_LIMITS NUMBER NUMBER {
+    | can_data NETWORK_LIMITS NUMBER NUMBER{
         $$ = $1;
         $$.network_limits = new NETWORK_LIMITS(@$, $3, $4);
     }
-    
+    | can_data USDTP_TIMING_DEFAULTS NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER {
+        $$ = $1;
+        $$.usdtp_timing_defaults = new USDTP_TIMING_DEFAULTS(@$, $3, $4, $5, $6, $7, $8, $9);
+    }
+    | can_data USDTP_TIMING NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER {
+        $$ = $1;
+        $$.usdtp_timing = new USDTP_TIMING(@$, $3, $4, $5, $6, $7, $8, $9);
+    }
     ;
 
 

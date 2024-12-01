@@ -7,19 +7,19 @@ using System.Threading.Tasks;
 namespace Asap2
 {
     [Base()]
-    public class USDTP_TIMING : Asap2Base
+    public class USDTP_TIMING_DEFAULTS : Asap2Base
     {
         /// <summary>
         /// Characteristic types 
         /// </summary>
 
-        public USDTP_TIMING(Location location, decimal as1, decimal bs, decimal cr) : base(location)
+        public USDTP_TIMING_DEFAULTS(Location location, decimal as1, decimal bs, decimal cr) : base(location)
         {
             this.as1 = as1;
             this.bs = bs;
             this.cr = cr;
         }
-        public USDTP_TIMING(Location location, decimal as1, decimal bs, decimal cr, decimal p2Min, decimal p2Max, decimal p3Min, decimal p3Max) : base(location)
+        public USDTP_TIMING_DEFAULTS(Location location, decimal as1, decimal bs, decimal cr, decimal p2Min, decimal p2Max, decimal p3Min, decimal p3Max) : base(location)
         {
             this.as1 = as1;
             this.bs = bs;
@@ -44,5 +44,6 @@ namespace Asap2
         public decimal p3Min { get; private set; }
         [Element(7, IsArgument = true)]
         public decimal p3Max { get; private set; }
+
     }
 }
