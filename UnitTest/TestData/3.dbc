@@ -1,0 +1,57 @@
+VERSION ""
+
+
+NS_ : 
+	NS_DESC_
+	CM_
+	BA_DEF_
+	BA_
+	VAL_
+	CAT_DEF_
+	CAT_
+	FILTER
+	BA_DEF_DEF_
+	EV_DATA_
+	ENVVAR_DATA_
+	SGTYPE_
+	SGTYPE_VAL_
+	BA_DEF_SGTYPE_
+	BA_SGTYPE_
+	SIG_TYPE_REF_
+	VAL_TABLE_
+	SIG_GROUP_
+	SIG_VALTYPE_
+	SIGTYPE_VALTYPE_
+	BO_TX_BU_
+	BA_DEF_REL_
+	BA_REL_
+	BA_DEF_DEF_REL_
+	BU_SG_REL_
+	BU_EV_REL_
+	BU_BO_REL_
+	SG_MUL_VAL_
+
+BS_:
+
+BU_:
+VAL_TABLE_ APU_OpMode 7 "Power_Up" 6 "E_STOP" 5 "RUN" 4 "Warm_Up" 3 "Cranking" 2 "Pre_Cranking" 1 "Standby" 0 "Fault" ;
+
+
+BO_ 2292960751 CAN_CMD: 7 Vector__XXX
+ SG_ TorqueFF_SpeedMode : 40|16@1- (-0.1,0) [-3276.7|3276.8] "Nm" Vector__XXX
+ SG_ Speed_Command : 24|16@1- (-1,0) [-32767|32768] "RPM" Vector__XXX
+ SG_ Current_Command : 8|16@1- (0.1,0) [-3276.8|3276.7] "A" Vector__XXX
+ SG_ SpeedControlOverride : 3|1@1- (1,0) [0|1] "" Vector__XXX
+ SG_ OutputDisable : 2|1@1- (1,0) [0|1] "" Vector__XXX
+ SG_ Start_Stop : 0|2@1+ (1,0) [0|3] "" Vector__XXX
+
+BO_ 2566913792 Engine_Cmd: 6 Vector__XXX
+ SG_ TorqueFeedFWD : 32|16@1- (0.1,0) [-3276.8|3276.7] "%" Vector__XXX
+ SG_ EngineSpeedCmd : 16|16@1+ (0.125,0) [0|8191.88] "RPM" Vector__XXX
+ SG_ RunCommand : 8|1@1- (1,0) [0|1] "" Vector__XXX
+ SG_ opMode : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+
+
+
+VAL_ 2566913792 opMode 7 "Power_Up" 6 "E_STOP" 5 "RUN" 4 "Warm_Up" 3 "Cranking" 2 "Pre_Cranking" 1 "Standby" 0 "Fault" ;
+
