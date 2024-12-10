@@ -36,24 +36,16 @@ namespace UnitTest
                 Assert.IsNotNull(compuMethods);
                 Assert.IsTrue(compuMethods.Count > 0);
 
-                // Process measurement events
-                var events = new List<int>();
-                foreach (var m in measurements)
+                // Check DAQ events; note: we should skip files 5 and 6 - there are no DAQ events on these files
+                if (i < 5)
                 {
-                    var meas = m.Value as MEASUREMENT;
-                    if (meas.if_data.Count > 0)
-                    {
-                        //var eventsStr = meas.if_data.First().data;
-                        //var regex = new Regex(@"EVENT\s+(\d+)", RegexOptions.Compiled);
-                        //foreach (Match match in regex.Matches(eventsStr))
-                        //    if (int.TryParse(match.Groups[1].Value, out int number))
-                        //        events.Add(number);
-                    }
+                    var events = measurements
+                        .SelectMany(m => (m.Value as MEASUREMENT)?.if_data)
+                        .Where(ifData => ifData.daq_event != null)
+                        .Select(ifData => ifData.daq_event)
+                        .ToList();
+                    Assert.IsTrue(events.Count > 0);
                 }
-
-                // Note: some of the A2L test files do not contain an EVENT record for MEASUREMENT
-                // Uncomment next line to see which one is fail the test (i.e. has no events)
-                //Assert.IsTrue(events.Count > 0);
             }
         }
     }
