@@ -51,7 +51,6 @@ namespace Asap2
 
         /// <summary>
         /// Reference to the relevant record of the description of the conversion method (see <see cref="COMPU_METHOD"/>).
-        /// If there is no conversion method, as in the case of <see cref="CURVE_AXIS"/>,
         /// the parameter ‘Conversion’ should be set to “NO_COMPU_METHOD" (measurement and calibration systems must be able to handle this case). 
         /// </summary>
         [Element(7, IsArgument = true, Comment = " Conversion     ")]

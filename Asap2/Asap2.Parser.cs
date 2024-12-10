@@ -27,7 +27,7 @@ namespace Asap2
             {
                 return Enum.Parse(type, strIn);
             }
-            catch (ArgumentException e)
+            catch (ArgumentException)
             {
                 StringBuilder values = new StringBuilder();
                 string[] myArray = Enum.GetNames(type);

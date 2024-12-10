@@ -66,6 +66,7 @@ namespace QUT.Gppg
             "QP_BLOB     IDENTIFIER",
             "MEASUREMENT IDENTIFIER",
             "FLASH       IDENTIFIER",
+            "ADDRESS       IDENTIFIER",
         };
 
         private void ReadReidentification()

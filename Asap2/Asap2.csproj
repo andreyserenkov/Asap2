@@ -80,6 +80,7 @@
     <Compile Include="Asap2Tree\CHARACTERISTIC.cs" />
     <Compile Include="Asap2Tree\CHECKSUM.cs" />
     <Compile Include="Asap2Tree\COMPU_METHOD.cs" />
+    <Compile Include="Asap2Tree\DEFAULT_EVENT_LIST.cs" />
     <Compile Include="Asap2Tree\DEFINED_PAGES.cs" />
     <Compile Include="Asap2Tree\CODE_CHK.cs" />
     <Compile Include="Asap2Tree\DIAG_BAUD.cs" />

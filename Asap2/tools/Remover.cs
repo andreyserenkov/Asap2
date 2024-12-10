@@ -14,7 +14,6 @@ namespace Asap2.tools
         /// <param name="module">Asap2 <see cref="MODULE"/> to delete elements from.</param>
         /// <param name="elementsToDelete">Element types to remove</param>
         /// <param name="options">Common options</param>
-        /// <param name="moduleName">Name of module to remove elements from. If not specified the first module is used.</param>
         static public void RemoveAllElements(ref MODULE module, Options.ElementTypes elementsToDelete, Options options)
         {
             {
