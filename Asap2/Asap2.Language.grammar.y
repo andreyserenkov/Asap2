@@ -94,6 +94,7 @@
             public SESSION session;
             public KP_BLOB kp_blob;
             public DEFAULT_EVENT_LIST default_event_list;
+            public DEFAULT_EVENT_LIST available_event_list;
             public TransportProtocolVersion transportProtocolVersion;
 }
 
@@ -283,6 +284,7 @@
 %token USDTP_TIMING
 %token KP_BLOB
 %token DEFAULT_EVENT_LIST
+%token AVAILABLE_EVENT_LIST
 %token maxParseToken COMMENT
 
 
@@ -438,6 +440,8 @@
 %type <kp_blob>             kp_blob_data
 %type <default_event_list>  default_event_list
 %type <default_event_list>  default_event_list_data
+%type <available_event_list>  available_event_list
+%type <available_event_list>  available_event_list_data
 %%
 
 Asap2File
@@ -1352,6 +1356,10 @@ if_data_data    : IDENTIFIER {
                 {
                     $$ = new IF_DATA(@$, $1);
                 }
+                | IDENTIFIER NUMBER{
+                    // TODO: Implement
+                    $$ = new IF_DATA(@$, $1, $2);
+                }
                 | IDENTIFIER IDENTIFIER NUMBER NUMBER NUMBER{
                 //TODO: Fill contructor correctly
                     $$ = new IF_DATA(@$, $1);
@@ -1488,17 +1496,21 @@ daq_event        : BEGIN DAQ_EVENT daq_event_data END DAQ_EVENT {
                 }
                 ;
 
-daq_event_data    : IDENTIFIER IDENTIFIER NUMBER{
-                    // TODO: Implement
-                    $$ = new DAQ_EVENT(@$, $3);
-                }
-                | IDENTIFIER {
+daq_event_data  : IDENTIFIER {
                     // TODO: Implement
                     $$ = new DAQ_EVENT(@$, $1);
+                }
+                | IDENTIFIER IDENTIFIER NUMBER{
+                    // TODO: Implement
+                    $$ = new DAQ_EVENT(@$, $3);
                 }
                 | daq_event_data default_event_list {
                     $$ = $1;
                     $$.default_event_list = $2;
+                }
+                | daq_event_data available_event_list {
+                    $$ = $1;
+                    $$.available_event_list = $2;
                 }
                 ;
 default_event_list : BEGIN DEFAULT_EVENT_LIST default_event_list_data END DEFAULT_EVENT_LIST {
@@ -1510,6 +1522,19 @@ default_event_list_data :  {
                     $$ = new DEFAULT_EVENT_LIST(@$);
                 }
                 | default_event_list_data IDENTIFIER NUMBER {
+                    $$ = $1;
+                    $$.events.Add($3);
+                }
+                ;
+available_event_list : BEGIN AVAILABLE_EVENT_LIST available_event_list_data END AVAILABLE_EVENT_LIST {
+                    $$ = $3;
+                }
+                ;
+
+available_event_list_data :  {
+                    $$ = new DEFAULT_EVENT_LIST(@$);
+                }
+                | available_event_list_data IDENTIFIER NUMBER {
                     $$ = $1;
                     $$.events.Add($3);
                 }

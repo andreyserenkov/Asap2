@@ -17,7 +17,7 @@ namespace Asap2Test
         {
             var errorHandler = new ErrorHandler();
             //var parser = new Asap2.Parser("../../../FCR-21_Dev.A2L", errorHandler);
-            var parser = new Asap2.Parser("../../../UnitTest/TestData/GDI-2.A2L", errorHandler);
+            var parser = new Asap2.Parser("../../../UnitTest/TestData/7.a2l", errorHandler);
             Asap2.FileComment comment = new Asap2.FileComment(Environment.NewLine + "A2l file for testing ASAP2 parser." + Environment.NewLine, true);
             Asap2.Asap2File tree = parser.DoParse();
             if (tree != null)

@@ -28,6 +28,7 @@ namespace Asap2
             this.eventType = eventType;
         }
 
+
         [Element(1, IsArgument = true, Name = "EVENTID")]
         public decimal eventid { get; private set; }
 
@@ -36,5 +37,7 @@ namespace Asap2
 
         public List<EVENT> events = new List<EVENT>();
         public DEFAULT_EVENT_LIST default_event_list { get; set; }
+
+        public DEFAULT_EVENT_LIST available_event_list { get; set; }
     }
 }

@@ -72,6 +72,7 @@
     <EmbeddedResource Include="TestData\4.a2l" />
     <EmbeddedResource Include="TestData\5.a2l" />
     <EmbeddedResource Include="TestData\6.a2l" />
+    <EmbeddedResource Include="TestData\7.a2l" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Asap2\Asap2.csproj">
