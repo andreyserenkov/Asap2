@@ -10,7 +10,7 @@
 // Gardens Point Parser Generator
 // Copyright (c) Wayne Kelly, QUT 2005-2010
 // (see accompanying GPPGcopyright.rtf)
-
+// #define TRACE_ACTIONS
 using System;
 using System.Text;
 using System.Globalization;
@@ -59,19 +59,24 @@ namespace QUT.Gppg
             ReadReidentification();
         }
 
+        private readonly string[] Reidentifiers = {
+            "DAQ         IDENTIFIER",
+            "EVENT       IDENTIFIER",
+            "RASTER      IDENTIFIER",
+            "QP_BLOB     IDENTIFIER",
+            "MEASUREMENT IDENTIFIER",
+            "FLASH       IDENTIFIER",
+            "ADDRESS       IDENTIFIER",
+        };
+
         private void ReadReidentification()
         {
-            using (var sr = File.OpenText("Asap2.Language.reidentifier.txt"))
+            foreach (var s in Reidentifiers)
             {
-                string s = String.Empty;
-                while ((s = sr.ReadLine()) != null)
-                {
-                    if (string.IsNullOrEmpty(s))
-                        continue;
-                    var r = s.Split('\t');
-                    var t = (Token)Enum.Parse(typeof(Token), r[1]);
-                    reidentification[r[0]] = t;
-                }
+                if (string.IsNullOrEmpty(s)) continue;
+                var r = s.Split(new[] { '\t', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                var t = (Token)Enum.Parse(typeof(Token), r[1]);
+                reidentification[r[0]] = t;
             }
         }
 

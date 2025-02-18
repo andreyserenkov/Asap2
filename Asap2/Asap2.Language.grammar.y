@@ -93,6 +93,8 @@
             public PAGE_SWITCH page_switch;
             public SESSION session;
             public KP_BLOB kp_blob;
+            public DEFAULT_EVENT_LIST default_event_list;
+            public DEFAULT_EVENT_LIST available_event_list;
             public TransportProtocolVersion transportProtocolVersion;
 }
 
@@ -281,6 +283,8 @@
 %token USDTP_TIMING_DEFAULTS
 %token USDTP_TIMING
 %token KP_BLOB
+%token DEFAULT_EVENT_LIST
+%token AVAILABLE_EVENT_LIST
 %token maxParseToken COMMENT
 
 
@@ -368,6 +372,7 @@
 %type <daq_list>            daq_list
 %type <daq_list>            daq_list_data
 %type <cal_param_group>     cal_param_group
+%type <cal_param_group>     cal_param_group_data
 %type <protocol_layer>      protocol_layer
 %type <protocol_layer>      protocol_layer_data
 %type <page>                page
@@ -433,6 +438,10 @@
 %type <transportProtocolVersion> transportProtocolVersion_data
 %type <kp_blob>             kp_blob
 %type <kp_blob>             kp_blob_data
+%type <default_event_list>  default_event_list
+%type <default_event_list>  default_event_list_data
+%type <available_event_list>  available_event_list
+%type <available_event_list>  available_event_list_data
 %%
 
 Asap2File
@@ -1347,6 +1356,10 @@ if_data_data    : IDENTIFIER {
                 {
                     $$ = new IF_DATA(@$, $1);
                 }
+                | IDENTIFIER NUMBER{
+                    // TODO: Implement
+                    $$ = new IF_DATA(@$, $1, $2);
+                }
                 | IDENTIFIER IDENTIFIER NUMBER NUMBER NUMBER{
                 //TODO: Fill contructor correctly
                     $$ = new IF_DATA(@$, $1);
@@ -1483,9 +1496,47 @@ daq_event        : BEGIN DAQ_EVENT daq_event_data END DAQ_EVENT {
                 }
                 ;
 
-daq_event_data    : IDENTIFIER IDENTIFIER NUMBER{
+daq_event_data  : IDENTIFIER {
+                    // TODO: Implement
+                    $$ = new DAQ_EVENT(@$, $1);
+                }
+                | IDENTIFIER IDENTIFIER NUMBER{
                     // TODO: Implement
                     $$ = new DAQ_EVENT(@$, $3);
+                }
+                | daq_event_data default_event_list {
+                    $$ = $1;
+                    $$.default_event_list = $2;
+                }
+                | daq_event_data available_event_list {
+                    $$ = $1;
+                    $$.available_event_list = $2;
+                }
+                ;
+default_event_list : BEGIN DEFAULT_EVENT_LIST default_event_list_data END DEFAULT_EVENT_LIST {
+                    $$ = $3;
+                }
+                ;
+
+default_event_list_data :  {
+                    $$ = new DEFAULT_EVENT_LIST(@$);
+                }
+                | default_event_list_data IDENTIFIER NUMBER {
+                    $$ = $1;
+                    $$.events.Add($3);
+                }
+                ;
+available_event_list : BEGIN AVAILABLE_EVENT_LIST available_event_list_data END AVAILABLE_EVENT_LIST {
+                    $$ = $3;
+                }
+                ;
+
+available_event_list_data :  {
+                    $$ = new DEFAULT_EVENT_LIST(@$);
+                }
+                | available_event_list_data IDENTIFIER NUMBER {
+                    $$ = $1;
+                    $$.events.Add($3);
                 }
                 ;
 
@@ -1495,9 +1546,9 @@ daq             : BEGIN DAQ daq_data END DAQ {
                 }
                 ;
 
-daq_data   : IDENTIFIER NUMBER NUMBER NUMBER IDENTIFIER IDENTIFIER IDENTIFIER IDENTIFIER NUMBER IDENTIFIER IDENTIFIER{
+daq_data   : IDENTIFIER NUMBER NUMBER NUMBER IDENTIFIER_list NUMBER IDENTIFIER_list{
                     //TODO: Implement constructor
-                    $$ = new DAQ(@$);
+                    $$ = new DAQ(@$, $1, $2, $3, $4, $5, $6, $7);
                 }
                 | daq_data timestamp_supported {
                     $$ = $1;
@@ -1521,6 +1572,10 @@ daq_list : BEGIN DAQ_LIST daq_list_data END DAQ_LIST {
 daq_list_data : NUMBER IDENTIFIER IDENTIFIER IDENTIFIER NUMBER IDENTIFIER NUMBER IDENTIFIER NUMBER{
                     //TODO: Implement constructor
                     $$ = new DAQ_LIST(@$, $1, $3, $5, $7, $9);
+                }
+                | NUMBER IDENTIFIER IDENTIFIER IDENTIFIER NUMBER IDENTIFIER NUMBER IDENTIFIER NUMBER IDENTIFIER NUMBER{
+                    //TODO: Implement constructor
+                    $$ = new DAQ_LIST(@$, $1, $3, $5, $7, $9, $11);
                 }
                 ;
 
@@ -1580,28 +1635,36 @@ page        : BEGIN PAGE page_data END PAGE {
                 }
                 ;
 page_data   : NUMBER IDENTIFIER IDENTIFIER IDENTIFIER {
+                    //Todo: Implement PAGE constructor
                     //$$ = $1;
                     //$$ = new PAGE(@$, $1, $1, $1, $1, $1)
                 }
                 ;
 
 cal_param_group : BEGIN CAL_PARAM_GROUP cal_param_group_data END CAL_PARAM_GROUP {
-                    //$$ = $3;
+                    $$ = $3;
                 }
                 ;
 
 cal_param_group_data   : IDENTIFIER QUOTED_STRING IDENTIFIER NUMBER IDENTIFIER NUMBER IDENTIFIER QUOTED_STRING NUMBER NUMBER NUMBER NUMBER{
-                    //$$ = new CAL_PARAM_GROUP(@$);
+                    // Todo: Give good names to properties
+                    $$ = new CAL_PARAM_GROUP(@$, $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12);
                 };
 
-protocol_layer : BEGIN PROTOCOL_LAYER protocol_layer_data END PROTOCOL_LAYER {
+protocol_layer : BEGIN PROTOCOL_LAYER protocol_layer_data END PROTOCOL_LAYER  {
                     $$ = $3;
                 }
                 ;
 
 protocol_layer_data   : NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER IDENTIFIER_list{
-                    //TODO: Implement constructor
-                    //$$ = new CAL_PARAM_GROUP(@$);
+                    $$ = new PROTOCOL_LAYER(@$, $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11);
+                }
+                | NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER IDENTIFIER_list QUOTED_STRING{
+                    $$ = new PROTOCOL_LAYER(@$, $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12);
+                }
+                | protocol_layer_data OPTIONAL_CMD IDENTIFIER {
+                    $$ = $1;
+                    $$.optional_cmd.Add($3);
                 };
 
 

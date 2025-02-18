@@ -42,7 +42,15 @@ namespace Asap2
             this.indentType = "    ";
         }
 
+        public Parser(Stream stream, IErrorReporter errorHandler)
+        {
+            this.fileStream = stream;
+            this.errorHandler = errorHandler;
+            this.indentType = "    ";
+        }
+
         public string fileName { get; private set; }
+        private Stream fileStream {  get; set; } = null;
         public string indentType { get; set; }
 
         /// <summary>
@@ -54,7 +62,7 @@ namespace Asap2
             bool status = false;
             Asap2Scanner scanner;
             Asap2Parser parser;
-            using (var stream = new FileStream(fileName, FileMode.Open))
+            var stream = fileStream == null ? new FileStream(fileName, FileMode.Open) : fileStream;
             {
                 scanner = new Asap2Scanner(stream, this.errorHandler);
                 parser = new Asap2Parser(scanner, this.errorHandler);
@@ -68,6 +76,12 @@ namespace Asap2
                     status = false;
                 }
             }
+            if (fileStream == null)
+            {
+                stream.Close();
+                stream.Dispose();
+            }
+            else fileStream.Position = 0;
 
             if (status)
             {

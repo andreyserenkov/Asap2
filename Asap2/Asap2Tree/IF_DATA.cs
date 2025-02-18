@@ -14,6 +14,12 @@ namespace Asap2
             this.name = name;
         }
 
+        public IF_DATA(Location location, string name, decimal xcpPlusAmlStructureVersion) : base(location)
+        {
+            this.name = name;
+            this.xcpPlusAmlStructureVersion = xcpPlusAmlStructureVersion;
+        }
+
         public string name { get; private set; }
 
         [Element(1)]
@@ -48,6 +54,9 @@ namespace Asap2
         public SEED_KEY seed_key { get; set; }
         [Element(12, IsArgument = false, Name = "RASTER", Comment = "KP_BLOB for IF_DATA")]
         public KP_BLOB kp_blob { get; set; }
+
+        [Element(13, IsArgument = true, Name = "XCP_PLUS_AML_STRUCTURE_VERSION")]
+        public decimal xcpPlusAmlStructureVersion { get; private set; }
 
 
     }

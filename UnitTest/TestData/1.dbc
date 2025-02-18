@@ -1,0 +1,167 @@
+VERSION ""
+
+
+NS_ : 
+	NS_DESC_
+	CM_
+	BA_DEF_
+	BA_
+	VAL_
+	CAT_DEF_
+	CAT_
+	FILTER
+	BA_DEF_DEF_
+	EV_DATA_
+	ENVVAR_DATA_
+	SGTYPE_
+	SGTYPE_VAL_
+	BA_DEF_SGTYPE_
+	BA_SGTYPE_
+	SIG_TYPE_REF_
+	VAL_TABLE_
+	SIG_GROUP_
+	SIG_VALTYPE_
+	SIGTYPE_VALTYPE_
+	BO_TX_BU_
+	BA_DEF_REL_
+	BA_REL_
+	BA_DEF_DEF_REL_
+	BU_SG_REL_
+	BU_EV_REL_
+	BU_BO_REL_
+	SG_MUL_VAL_
+
+BS_:
+
+BU_: FlightController FCR21
+VAL_TABLE_ ContactorState 1 "Closed" 0 "Open" ;
+VAL_TABLE_ Derate_State 2 "Derate Severe" 1 "Derate Medium" 0 "No Derate" ;
+VAL_TABLE_ Enable 1 "Enable" 0 "Disable" ;
+VAL_TABLE_ Faults 1 "Active" 0 "OK" ;
+
+
+BO_ 3221225472 VECTOR__INDEPENDENT_SIG_MSG: 0 Vector__XXX
+ SG_ FC_CurrentCommand : 0|16@1- (0.1,0) [-3276.8|3276.7] "A" Vector__XXX
+ SG_ EngineSpeedSetpoint : 0|16@1+ (0.125,0) [0|8000] "RPM" Vector__XXX
+ SG_ DerateState : 0|2@1- (1,0) [0|0] "" Vector__XXX
+
+BO_ 2566913792 Engine_CMD: 6 Vector__XXX
+
+BO_ 2287599680 FC_Command: 2 FlightController
+ SG_ Current_Output_Disable : 10|1@1- (1,0) [0|0] "" Vector__XXX
+ SG_ Contactor_State : 9|1@1- (1,0) [0|0] "" Vector__XXX
+ SG_ DerateOverride : 8|1@1+ (1,0) [0|0] ""  FCR21
+ SG_ EngineRunCommand : 0|8@1- (1,0) [0|0] ""  FCR21
+
+BO_ 2293367008 Engine_Parameters_4: 7 FCR21
+ SG_ SystemVoltage : 48|8@1+ (0.1,10) [10|35.5] "V"  FlightController
+ SG_ InjectionDuration : 40|8@1+ (0.05,0) [0|255] "ms"  FlightController
+ SG_ ecuRunTimer : 32|8@1+ (1,0) [0|255] ""  FlightController
+ SG_ EngineRunHours : 16|16@1+ (0.1,0) [0|6553.5] "hr"  FlightController
+ SG_ ThrottlePositionCommand : 8|8@1+ (0.25,0) [0|100] "%"  FlightController
+ SG_ ThrottlePositionSignal : 0|8@1+ (0.25,0) [0|100] "%"  FlightController
+
+BO_ 2293366976 Engine_Parameters_3: 8 FCR21
+ SG_ ExhaustGasTemp2 : 48|16@1- (0.25,0) [-40|999] "deg C"  FlightController
+ SG_ ExhaustGasTemp1 : 32|16@1- (0.25,0) [-40|999] "deg C"  FlightController
+ SG_ CoolantTemp2 : 16|16@1- (0.1,0) [-40|250] "deg C"  FlightController
+ SG_ CoolantTemp1 : 0|16@1- (0.1,0) [-40|250] "deg C"  FlightController
+
+BO_ 2293366944 Engine_Parameters_2: 4 FCR21
+ SG_ AirTemp : 16|16@1- (0.1,0) [-40|250] "deg C"  FlightController
+ SG_ Barometer : 0|16@1+ (1,0) [0|0] "mbar"  FlightController
+
+BO_ 2293366912 Engine_Parameters_1: 8 FCR21
+ SG_ Torque : 48|16@1- (0.1,0) [-40|100] "%"  FlightController
+ SG_ ManifoldPressure : 32|16@1+ (1,0) [0|0] "mbar"  FlightController
+ SG_ EngineSpeed : 16|16@1+ (0.125,0) [0|8000] "RPM"  FlightController
+ SG_ EngineState : 0|8@1- (1,0) [0|0] ""  FlightController
+
+BO_ 2293366880 Engine_Faults: 5 FCR21
+ SG_ Flt_EGT2_High : 36|1@1- (1,0) [0|0] "" Vector__XXX
+ SG_ Flt_EGT1_High : 35|1@1- (1,0) [0|0] "" Vector__XXX
+ SG_ Flt_EngineTempHigh : 34|1@1- (1,0) [0|0] "" Vector__XXX
+ SG_ Flt_Underspeed : 33|1@1- (1,0) [0|0] "" Vector__XXX
+ SG_ Flt_Overspeed : 32|1@1- (1,0) [0|0] "" Vector__XXX
+ SG_ Flt_FuelPressure_Low : 25|1@1- (1,0) [0|0] "" Vector__XXX
+ SG_ Flt_FuelPressure_High : 24|1@1- (1,0) [0|0] "" Vector__XXX
+ SG_ Flt_Throttle_Error : 38|1@1- (1,0) [0|0] "" Vector__XXX
+ SG_ Flt_IAT_Low : 23|1@1- (1,0) [0|0] "" Vector__XXX
+ SG_ Flt_IAT_High : 22|1@1- (1,0) [0|0] "" Vector__XXX
+ SG_ Flt_MAP_Low : 21|1@1- (1,0) [0|0] "" Vector__XXX
+ SG_ Flt_MAP_High : 20|1@1- (1,0) [0|0] "" Vector__XXX
+ SG_ Flt_BarometerLow : 19|1@1- (1,0) [0|0] "" Vector__XXX
+ SG_ Flt_BarometerHigh : 18|1@1- (1,0) [0|0] "" Vector__XXX
+ SG_ Flt_Inj2_Short : 17|1@1- (1,0) [0|0] "" Vector__XXX
+ SG_ Flt_Inj2_DrvrOverTemp : 16|1@1- (1,0) [0|0] "" Vector__XXX
+ SG_ Flt_Inj2_Overcurrent : 15|1@1- (1,0) [0|0] "" Vector__XXX
+ SG_ Flt_Inj2_OpenLoad : 14|1@1- (1,0) [0|0] "" Vector__XXX
+ SG_ Flt_Inj1_Short : 13|1@1- (1,0) [0|0] "" Vector__XXX
+ SG_ Flt_Inj1_Overcurrent : 11|1@1- (1,0) [0|0] "" Vector__XXX
+ SG_ Flt_Inj1_OpenLoad : 10|1@1- (1,0) [0|0] "" Vector__XXX
+ SG_ Flt_Inj1_DrvrOverTemp : 12|1@1- (1,0) [0|0] "" Vector__XXX
+ SG_ Flt_FuelTemp_Low : 9|1@1- (1,0) [0|0] "" Vector__XXX
+ SG_ Flt_FuelTemp_High : 8|1@1- (1,0) [0|0] "" Vector__XXX
+ SG_ Flt_EGT2_OC : 7|1@1- (1,0) [0|0] "" Vector__XXX
+ SG_ Flt_EGT2_Low : 6|1@1- (1,0) [0|0] "" Vector__XXX
+ SG_ Flt_EGT1_OC : 5|1@1- (1,0) [0|0] "" Vector__XXX
+ SG_ Flt_EGT1_Low : 4|1@1- (1,0) [0|0] "" Vector__XXX
+ SG_ Flt_CoolantTempSensor2_Low : 3|1@1- (1,0) [0|0] "" Vector__XXX
+ SG_ Flt_CoolantTempSensor2_High : 2|1@1- (1,0) [0|0] "" Vector__XXX
+ SG_ Flt_CoolantTempSensor1_Low : 1|1@1- (1,0) [0|0] "" Vector__XXX
+ SG_ Flt_CoolantTempSensor1_High : 0|1@1- (1,0) [0|0] "" Vector__XXX
+ SG_ Flt_CrankSensor : 37|1@1- (1,0) [0|0] "" Vector__XXX
+
+BO_ 2291269696 Fuel_Parameters: 4 FCR21
+ SG_ FuelTemp : 16|16@1- (0.1,0) [-50|250] "deg C"  FlightController
+ SG_ FuelPressure : 0|16@1+ (1,0) [0|0] "mbar"  FlightController
+
+
+
+CM_ BO_ 3221225472 "This is a message for not used signals, created by Vector CANdb++ DBC OLE DB Provider.";
+CM_ SG_ 2287599680 Current_Output_Disable "Force output current from the generator to 0A. Bypasses closed-loop control to cut output faster.";
+BA_DEF_  "BaudRate" INT 125 1000;
+BA_DEF_  "MultiplexExtEnabled" ENUM  "No","Yes";
+BA_DEF_  "BusType" STRING ;
+BA_DEF_DEF_  "BaudRate" 500;
+BA_DEF_DEF_  "MultiplexExtEnabled" "No";
+BA_DEF_DEF_  "BusType" "CAN";
+VAL_ 3221225472 DerateState 2 "Derate Severe" 1 "Derate Medium" 0 "No Derate" ;
+VAL_ 2287599680 Current_Output_Disable 1 "Enable" 0 "Disable" ;
+VAL_ 2287599680 Contactor_State 1 "Closed" 0 "Open" ;
+VAL_ 2287599680 DerateOverride 1 "Enable" 0 "Disable" ;
+VAL_ 2293366912 EngineState 6 "Shutdown" 5 "Run" 4 "BIT" 3 "Stabilize" 2 "Start" 1 "Preheat" 0 "OFF" ;
+VAL_ 2293366880 Flt_EGT2_High 1 "Active" 0 "OK" ;
+VAL_ 2293366880 Flt_EGT1_High 1 "Active" 0 "OK" ;
+VAL_ 2293366880 Flt_EngineTempHigh 1 "Active" 0 "OK" ;
+VAL_ 2293366880 Flt_Underspeed 1 "Active" 0 "OK" ;
+VAL_ 2293366880 Flt_Overspeed 1 "Active" 0 "OK" ;
+VAL_ 2293366880 Flt_FuelPressure_Low 1 "Active" 0 "OK" ;
+VAL_ 2293366880 Flt_FuelPressure_High 1 "Active" 0 "OK" ;
+VAL_ 2293366880 Flt_Throttle_Error 1 "Active" 0 "OK" ;
+VAL_ 2293366880 Flt_IAT_Low 1 "Active" 0 "OK" ;
+VAL_ 2293366880 Flt_IAT_High 1 "Active" 0 "OK" ;
+VAL_ 2293366880 Flt_MAP_Low 1 "Active" 0 "OK" ;
+VAL_ 2293366880 Flt_MAP_High 1 "Active" 0 "OK" ;
+VAL_ 2293366880 Flt_BarometerLow 1 "Active" 0 "OK" ;
+VAL_ 2293366880 Flt_BarometerHigh 1 "Active" 0 "OK" ;
+VAL_ 2293366880 Flt_Inj2_Short 1 "Active" 0 "OK" ;
+VAL_ 2293366880 Flt_Inj2_DrvrOverTemp 1 "Active" 0 "OK" ;
+VAL_ 2293366880 Flt_Inj2_Overcurrent 1 "Active" 0 "OK" ;
+VAL_ 2293366880 Flt_Inj2_OpenLoad 1 "Active" 0 "OK" ;
+VAL_ 2293366880 Flt_Inj1_Short 1 "Active" 0 "OK" ;
+VAL_ 2293366880 Flt_Inj1_Overcurrent 1 "Active" 0 "OK" ;
+VAL_ 2293366880 Flt_Inj1_OpenLoad 1 "Active" 0 "OK" ;
+VAL_ 2293366880 Flt_Inj1_DrvrOverTemp 1 "Active" 0 "OK" ;
+VAL_ 2293366880 Flt_FuelTemp_Low 1 "Active" 0 "OK" ;
+VAL_ 2293366880 Flt_FuelTemp_High 1 "Active" 0 "OK" ;
+VAL_ 2293366880 Flt_EGT2_OC 1 "Active" 0 "OK" ;
+VAL_ 2293366880 Flt_EGT2_Low 1 "Active" 0 "OK" ;
+VAL_ 2293366880 Flt_EGT1_OC 1 "Active" 0 "OK" ;
+VAL_ 2293366880 Flt_EGT1_Low 1 "Active" 0 "OK" ;
+VAL_ 2293366880 Flt_CoolantTempSensor2_Low 1 "Active" 0 "OK" ;
+VAL_ 2293366880 Flt_CoolantTempSensor2_High 1 "Active" 0 "OK" ;
+VAL_ 2293366880 Flt_CoolantTempSensor1_Low 1 "Active" 0 "OK" ;
+VAL_ 2293366880 Flt_CoolantTempSensor1_High 1 "Active" 0 "OK" ;
+VAL_ 2293366880 Flt_CrankSensor 1 "Active" 0 "OK" ;
+

@@ -217,6 +217,8 @@ TransportProtocolVersion        { return Make(Token.TransportProtocolVersion); }
 USDTP_TIMING_DEFAULTS           { return Make(Token.USDTP_TIMING_DEFAULTS); }
 USDTP_TIMING                    { return Make(Token.USDTP_TIMING); }
 KP_BLOB                         { return Make(Token.KP_BLOB); }
+DEFAULT_EVENT_LIST              { return Make(Token.DEFAULT_EVENT_LIST); }
+AVAILABLE_EVENT_LIST            { return Make(Token.AVAILABLE_EVENT_LIST); }
 A2ML                            { yy_push_state (STATE_A2ML); yylval.sb = new StringBuilder(); }
 "\/include"                     { yy_push_state(STATE_INCL); }
 \"                              { yy_push_state(STATE_STRING); yylval.sb = new StringBuilder(); }

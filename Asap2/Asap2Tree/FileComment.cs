@@ -27,6 +27,7 @@ namespace Asap2
         /// <summary>
         /// Default constructor.
         /// </summary>
+        /// <param name="location"></param>
         /// <param name="comment">First comment line.</param>
         /// <param name="startNewLineWithStar">Indicates if each comment line shall start with a *.</param>
         public FileComment(Location location, string comment = null, bool startNewLineWithStar = false) : base(location)
