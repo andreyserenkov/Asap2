@@ -5,6 +5,7 @@
 %tokentype Token
 %YYLTYPE Location
 
+
 %union { 
             public decimal d;
             public String s;
@@ -95,6 +96,7 @@
             public KP_BLOB kp_blob;
             public DEFAULT_EVENT_LIST default_event_list;
             public DEFAULT_EVENT_LIST available_event_list;
+            public TYPEDEF_MEASUREMENT typedef_measurement;
             public TransportProtocolVersion transportProtocolVersion;
 }
 
@@ -285,6 +287,7 @@
 %token KP_BLOB
 %token DEFAULT_EVENT_LIST
 %token AVAILABLE_EVENT_LIST
+%token TYPEDEF_MEASUREMENT
 %token maxParseToken COMMENT
 
 
@@ -442,6 +445,8 @@
 %type <default_event_list>  default_event_list_data
 %type <available_event_list>  available_event_list
 %type <available_event_list>  available_event_list_data
+%type <typedef_measurement>  typedef_measurement
+%type <typedef_measurement>  typedef_measurement_data
 %%
 
 Asap2File
@@ -1205,6 +1210,10 @@ module_data :   IDENTIFIER QUOTED_STRING {
                     $$ = $1;
                     $$.elements.Add($2);
                 }
+                | module_data typedef_measurement {
+                    $$ = $1;
+                    $$.typedef_measurement = $2;
+                }
                 ;
 
 mod_common      : BEGIN MOD_COMMON mod_common_data END MOD_COMMON {
@@ -1425,7 +1434,9 @@ if_data_data    : IDENTIFIER {
                     $$ = $1;
                     $$.kp_blob = $2;
                 }
+                
                 ;
+
 
 
 kp_blob         : BEGIN KP_BLOB kp_blob_data END KP_BLOB {
@@ -2559,6 +2570,8 @@ diag_baud_data
         $$ = new DIAG_BAUD(@$, $1, $2, $4);
     }
     ;
+
+
 time_def
     : BEGIN TIME_DEF time_def_data END TIME_DEF {
         $$ = $3;
@@ -2613,6 +2626,23 @@ transportProtocolVersion_data
         $$ = new TransportProtocolVersion(@$, $1);
     }
     ;
+typedef_measurement         : BEGIN TYPEDEF_MEASUREMENT typedef_measurement_data END TYPEDEF_MEASUREMENT {
+                                $$ = $3;
+                            }
+                            ;
+
+typedef_measurement_data    : {
+                                $$ = new TYPEDEF_MEASUREMENT(@$);
+                            }
+                            | typedef_measurement_data IDENTIFIER QUOTED_STRING IDENTIFIER IDENTIFIER NUMBER NUMBER NUMBER NUMBER{
+                                $$ = $1;
+                                $$ = new TYPEDEF_MEASUREMENT(@$, $2, $3, $4, $5, $6, $7, $8, $9);
+                            }
+                            | typedef_measurement_data BIT_MASK NUMBER {
+                                    $$ = $1;
+                                    $$.bit_mask = (UInt64)$3;
+                            }
+                            ;
 
 
 %%

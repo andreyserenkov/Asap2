@@ -10,6 +10,7 @@
 %}
 
 
+
 Identifier              [A-Za-z_][A-Za-z0-9_\.\[\]]*
 Space                   [ \t\u000c]
 Decimal                 [\-+]?[0-9]+(\.[0-9]*)?([eE][\-+]?[0-9]+)?
@@ -219,6 +220,7 @@ USDTP_TIMING                    { return Make(Token.USDTP_TIMING); }
 KP_BLOB                         { return Make(Token.KP_BLOB); }
 DEFAULT_EVENT_LIST              { return Make(Token.DEFAULT_EVENT_LIST); }
 AVAILABLE_EVENT_LIST            { return Make(Token.AVAILABLE_EVENT_LIST); }
+TYPEDEF_MEASUREMENT             { return Make(Token.TYPEDEF_MEASUREMENT); }
 A2ML                            { yy_push_state (STATE_A2ML); yylval.sb = new StringBuilder(); }
 "\/include"                     { yy_push_state(STATE_INCL); }
 \"                              { yy_push_state(STATE_STRING); yylval.sb = new StringBuilder(); }
@@ -242,6 +244,7 @@ A2ML                            { yy_push_state (STATE_A2ML); yylval.sb = new St
 //    .               { yylval.sb.Append(yytext); }
 //    <<EOF>>         { ; /* raise an error. */ }
 //}
+
 
 <STATE_A2ML> {
     "\/end A2ML"    { yy_pop_state(); return MakeStringBuilder(Token.A2ML); }
@@ -278,5 +281,6 @@ A2ML                            { yy_push_state (STATE_A2ML); yylval.sb = new St
 }
 
 %%
+
 
 // User code is all now in Asap2.Scanner.cs

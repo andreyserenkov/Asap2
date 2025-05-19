@@ -91,6 +91,7 @@
     <Compile Include="Asap2Tree\PAGE_SWITCH.cs" />
     <Compile Include="Asap2Tree\SESSION.cs" />
     <Compile Include="Asap2Tree\TransportProtocolVersion.cs" />
+    <Compile Include="Asap2Tree\TYPEDEF_MEASUREMENT.cs" />
     <Compile Include="Asap2Tree\USDTP_TIMING_DEFAULTS.cs" />
     <Compile Include="Asap2Tree\USDTP_TIMING.cs" />
     <Compile Include="Asap2Tree\KWP_TIMING.cs" />

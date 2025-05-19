@@ -304,8 +304,11 @@ namespace Asap2
                 throw new ValidationErrorException(String.Format("Warning: Duplicate '{0}' (Must be unique of all 'USER_RIGHTSs' in the MODULE) with name '{1}' found, ignoring", obj.GetType().Name, obj.Name));
             }
         }
-#endregion
+        #endregion
 
+
+        [Element(14, IsArgument = false, Name = "TYPEDEF_MEASUREMENT", Comment = "TYPEDEF_MEASUREMENT for IF_DATA")]
+        public TYPEDEF_MEASUREMENT typedef_measurement { get; set; }
         public void Validate(IErrorReporter errorReporter)
         {
             {
